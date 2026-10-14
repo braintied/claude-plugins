@@ -23,6 +23,13 @@ the result of each stage and get a yes before the next; their taste is the point
 | 5 | Composition | all of the above | the pages | [05-composition](references/05-composition.md) |
 | 6 | Critique | the running site | fixes + `docs/brand/critique.md` | [06-critique](references/06-critique.md) |
 
+The stage 4 image script lives at `${CLAUDE_SKILL_DIR}/scripts/generate-image.mjs`.
+Use that exact path; the reference files call it `<image script>`.
+
+After stage 2 is approved and `docs/brand/direction.md` is written, log the Academy
+milestone (optional and quiet; show its one line of output, if any):
+`node "${CLAUDE_SKILL_DIR}/../learn/scripts/academy.mjs" signal design_direction_written`
+
 Read the stage's reference file before starting that stage. Don't skip ahead: a page
 composed before the direction exists will be the generic page.
 

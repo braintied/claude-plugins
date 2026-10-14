@@ -21,3 +21,12 @@ description: Review, check, commit and push the current work so it deploys, then
 9. Wait for the deploy (Vercel dashboard, or `vercel ls` if the CLI is installed), open
    the live URL, and check the changed page at phone and desktop width.
 10. Tell the person in one or two plain sentences what's live and where.
+11. Academy (optional, quiet): once the live URL loads, log the milestone. The first
+    successful deploy is `first_deploy`; if the waitlist form on the live site saved a
+    signup, also `waitlist_live`.
+
+    ```bash
+    node "${CLAUDE_SKILL_DIR}/../learn/scripts/academy.mjs" signal first_deploy url=<live URL>
+    ```
+
+    Show its one line of output, if any, and nothing more.

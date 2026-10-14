@@ -25,6 +25,7 @@ offer to install it automatically when you open them.
 | `/next` | Suggests the most valuable next thing to build, with a ready prompt. |
 | `/review-my-diff` | Reviews your changes for bugs, leaked keys, missing security, broken mobile. |
 | `/ship-it` | Review, check, commit, push, confirm the live site. |
+| `/learn` | Shows your [Braintied Academy](https://braintied.com/academy) progress and logs milestones (design direction, first deploy...) as you hit them. Optional: sign in once with `npx @braintied/academy login`; without it, it stays quiet. |
 
 `/design` stage 4 generates images with OpenAI's newest GPT Image model and needs
 `OPENAI_API_KEY` in your project's `.env.local`.

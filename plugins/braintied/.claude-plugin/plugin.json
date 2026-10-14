@@ -1,7 +1,7 @@
 {
   "name": "braintied",
-  "description": "Design beautiful, intentional sites and ship them safely: a six-stage /design pipeline plus /explain, /next, /brand-to-tokens, /review-my-diff and /ship-it.",
-  "version": "0.1.0",
+  "description": "Design beautiful, intentional sites and ship them safely: a six-stage /design pipeline plus /explain, /next, /learn, /brand-to-tokens, /review-my-diff and /ship-it.",
+  "version": "0.2.0",
   "author": {
     "name": "Braintied",
     "email": "hello@braintied.com"

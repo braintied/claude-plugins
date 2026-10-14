@@ -38,11 +38,13 @@ Write it like a brief to a photographer, in this order:
 
 ## Generate
 
-The script uses OpenAI's newest image model (`gpt-image-2.5-flare`) and needs
-`OPENAI_API_KEY` in `.env.local` (the person adds it; never ask them to paste it).
+Run it from the project folder; `<image script>` is the full path given in the design
+skill's SKILL.md. The script uses OpenAI's newest image model (`gpt-image-2.5-flare`)
+and needs `OPENAI_API_KEY` in `.env.local`. The person adds it themselves (`pnpm keys`
+in idea-to-mvp projects); never ask them to paste it in the chat.
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/skills/design/scripts/generate-image.mjs" \
+node "<image script>" \
   --prompt-file docs/brand/prompts/hero.txt \
   --out public/images/hero.png \
   --size 1536x1024
