@@ -24,3 +24,10 @@ Found in the Edge City workshop rehearsal (idea-to-mvp
   progress with colors stripped all came out right.
 - A headless `/design` run with `--plugin-dir` resolved the real script path and fired
   `design_direction_written` through the `../learn` path.
+
+**Known gap (2026-10-15)**
+The Academy companion endpoints and the Kit API are built on Braintied branch
+`academy/stage-a-kit-api` (worktree `braintied-academy-stage-a`, PR #54) but are not
+deployed. Until they are, `/learn` against braintied.com gets errors from
+`/api/academy/*`. The wrapper turns that into one "couldn't log … (offline?)" line, so
+`/design` and `/ship-it` keep working.
