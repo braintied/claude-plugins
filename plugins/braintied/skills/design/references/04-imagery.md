@@ -20,9 +20,10 @@ Plus the cutouts the composition needs (an object with a transparent background 
 over a page), and phone crops for every full-bleed frame (step 4).
 
 **No OpenAI key?** Don't stop the person to make one mid-session. Choose one: their own
-photos in `public/images/` (judged against the refusals the same way), a typographic
-page where the direction's page form carries it with no photography, or imagery later.
-Write which in `docs/brand/images.md`.
+photos in `public/images/` (judged against the refusals the same way), or re-plan the
+world layer as one that needs no photographs (the object drawn in code, a field, a
+typographic page) and go back to stage 2's world-layer line. Write which in
+`docs/brand/images.md`. Never "imagery later": stage 5 composes to the pictures it has.
 
 Plan frames the model can draw. Hands *operating a mechanism* (squeezing a brake lever,
 turning a key, typing) fail most often: the hand ends up beside the part, not on it. Show
