@@ -54,6 +54,18 @@ For each page, list its sections in order. Each line has three parts:
 - **Content** is the actual words and data, from the brief. Anything on the brief's
   **Can't claim yet** line is out, or appears only inside something labelled *Example*.
 
+Read a pattern's recipe through this project's identity:
+
+- **Its numbers are proportions, not sizes.** A recipe's "4rem to 8.5rem display" means
+  "much bigger than the body"; map it onto the nearest step of the stage 3 scale. If a
+  page needs one size bigger than the scale has, add a single display step to the scale
+  in stage 3 and use it everywhere, rather than a one-off size in one section.
+- **"Mono" in a recipe means the label role**: small, tracked uppercase in the text
+  face, unless stage 3 chose a mono face. Don't add a third family for a label.
+- **"Accent" or "brand" in a recipe means ground and ink** unless the direction lets the
+  brand colour go beyond the action and the invariant. A two-tone image in ground and
+  ink often fits the world better anyway.
+
 Then apply the direction's **Page form** on top: the pattern says what the section
 does, the page form says what it looks like in this world (a ledger in a menu card is
 set as a menu; in a station board, as a timetable).
@@ -69,6 +81,12 @@ Rules for the plan:
   one statement, the action, and nothing else in the band.
 - **The page form's frame counts as the bleed edge.** A pattern that asks for full bleed
   bleeds to the card or board edge when the page form is a framed object.
+- **Not every section needs a pattern.** If none fits, write the section's own recipe in
+  the plan. A forced fit is worse than an honest one-off. Essentials pages (`/privacy`,
+  the 404) and the action page (`/join`) need none: their job is plain.
+- **The close band and the form:** a close pattern that forbids fields (as
+  `magnetic-close` does) ends on a link to `/join`; otherwise the form sits in the
+  close. Pick one per page.
 - **Answer patterns stack.** Put the question above its answer, never in a column to its
   left; that is the label-left default again.
 - Cut any section whose job repeats another's. Shorter wins.
@@ -112,6 +130,13 @@ being ticked one by one, as long as it rests on its finished frame.
 - **The header carries real navigation** once there is more than one page: the pages
   from the plan, the current page marked, and the one action. On a phone it must fit at
   375px without a hamburger if there are four links or fewer.
+- **Marking the current page needs a Suspense boundary.** The starter turns on Cache
+  Components, so a header that calls `usePathname()` in the layout fails `pnpm build`
+  ("URL data in a Client Component outside of `<Suspense>`") while `pnpm dev` looks fine.
+  Make the header take `path` as a prop; render
+  `<Suspense fallback={<SiteHeader path={null} />}><SiteHeaderLive /></Suspense>` in the
+  layout, where `SiteHeaderLive` is a two-line client component that passes
+  `usePathname()` through. Always run `pnpm build` before calling a page done.
 - **The action appears more than once**, so the form must work in a narrow column and
   full width: lay it out by its own width (`@container` on the wrapper, `@xl:flex-row`
   on the form), give inputs ids from `useId()`, and keep the button label on one line

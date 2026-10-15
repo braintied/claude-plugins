@@ -24,7 +24,8 @@ means *unknown*, not free; check those in a registrar's search. Write down in
 
 Pick at most two families from Google Fonts (load with `next/font/google`): one for
 headings, one for text, or one family doing both. Justify each against the direction in
-one sentence. Set a scale with clear jumps (e.g. 14 / 16 / 20 / 28 / 40 / 64) and line
+one sentence. Set a scale with clear jumps (e.g. 14 / 16 / 20 / 28 / 40 / 64, plus one display step
+such as 96 if the direction wants a statement at poster size) and line
 lengths of 55–75 characters for body text.
 
 Check the exact family name before writing code; Google renames families (there is no

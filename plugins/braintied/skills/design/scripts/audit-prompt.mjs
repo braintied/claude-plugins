@@ -13,7 +13,7 @@ if (!files.length) {
   process.exit(1);
 }
 const pc = await load("@braintied/prompt-craft");
-const ARRANGED = /\b(side by side|in a (neat )?row|lined up|evenly spaced|symmetrical(ly)?|perfectly arranged|in a grid)\b/i;
+const ARRANGED = /\b(side by side|in a (neat )?row|a row of|rows of|lined up|evenly spaced|symmetrical(ly)?|perfectly arranged|in a grid)\b/i;
 const NO_IMPERFECTION = /imperfection:/i;
 
 let problems = 0;
