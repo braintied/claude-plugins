@@ -5,9 +5,13 @@
 //   node contrast.mjs src/app/globals.css
 //
 // Passes at 4.5:1 (WCAG AA for body text). Exits 1 if any pair fails.
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const file = process.argv[2] ?? "src/app/globals.css";
+if (!existsSync(file)) {
+  console.error(`No ${file}. Run this from the project folder.`);
+  process.exit(1);
+}
 const css = readFileSync(file, "utf8");
 
 function tokens(block) {
@@ -39,7 +43,16 @@ for (const [name, block] of [["light", lightBlock], ["dark", darkBlock]]) {
   const t = tokens(block);
   if (!Object.keys(t).length) { console.log(`${name}: no hex tokens found`); failed++; continue; }
   for (const [fg, bg] of pairs) {
-    if (!t[fg] || !t[bg]) { console.log(`${name}  ${fg} on ${bg}: missing token`); failed++; continue; }
+    const absent = [fg, bg].filter((k) => !t[k]);
+    if (absent.length) {
+      const why = absent.map((k) => {
+        const raw = block.match(new RegExp(`--${k}:\\s*([^;]+);`))?.[1]?.trim();
+        return raw ? `--${k} is "${raw}"; write it as 6-digit hex` : `--${k} is missing`;
+      });
+      console.log(`${name}  ${fg} on ${bg}: ${why.join(", ")}`);
+      failed++;
+      continue;
+    }
     const r = ratio(t[fg], t[bg]);
     const ok = r >= 4.5;
     if (!ok) failed++;

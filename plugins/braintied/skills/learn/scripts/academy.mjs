@@ -17,7 +17,11 @@ const CLI = "@braintied/academy@0.1";
 const [command, ...rest] = process.argv.slice(2);
 
 function academy(args) {
-  const result = spawnSync("npx", ["-y", CLI, ...args], { encoding: "utf8", timeout: 60_000 });
+  const result = spawnSync("npx", ["-y", CLI, ...args], {
+    encoding: "utf8",
+    timeout: 60_000,
+    shell: process.platform === "win32", // npx is npx.cmd on Windows
+  });
   return { code: result.status, out: (result.stdout ?? "").trim() };
 }
 

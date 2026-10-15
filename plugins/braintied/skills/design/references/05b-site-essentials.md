@@ -14,8 +14,9 @@ writes its own part:
 
 ```ts
 // src/app/layout.tsx
+import { siteUrl } from "@/lib/env"; // falls back to the Vercel production address
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(siteUrl()),
   title: { default: "Nustem: Mapusa market fish at your door by ten", template: "%s · Nustem" },
   description: "<the brief's one sentence, in the voice>",
 };
@@ -23,6 +24,10 @@ export const metadata: Metadata = {
 // src/app/how-it-works/page.tsx
 export const metadata: Metadata = { title: "How a delivery goes", description: "<this page's job>" };
 ```
+
+Build every absolute URL (share image, sitemap, robots) from `siteUrl()` in
+`src/lib/env.ts`, never a localhost fallback: the live site leaves `NEXT_PUBLIC_SITE_URL`
+unset until it has its own domain.
 
 A description is the sentence you would say to someone who asked "what's on that
 page?". Not keywords.

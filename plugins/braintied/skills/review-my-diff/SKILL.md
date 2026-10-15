@@ -1,6 +1,6 @@
 ---
 name: review-my-diff
-description: Review everything that changed since the last commit before it's pushed — bugs, leaked secrets, missing row-level security, unchecked input, broken mobile layout. Use when someone asks for a review, "check my work", or before shipping.
+description: Review everything that hasn't been pushed yet — bugs, leaked secrets, missing row-level security, unchecked input, broken mobile layout. Use when someone asks for a review, "check my work", or before shipping.
 ---
 
 # Review my diff
@@ -8,7 +8,9 @@ description: Review everything that changed since the last commit before it's pu
 If the project has a `reviewer` subagent (`.claude/agents/reviewer.md`), hand the
 review to it. Otherwise do it yourself:
 
-Read `git status` and `git diff` (include new, untracked files). Fix nothing until the
+Review what is about to be pushed: `git status`, `git diff HEAD` (staged and unstaged),
+new untracked files, and every commit not yet on GitHub: `git log @{u}..HEAD -p` (with no
+upstream yet, `git log origin/main..HEAD -p`, or the whole repo on a first push). Fix nothing until the
 person says so. Report findings in plain language, most serious first, each with
 `path:line`, what goes wrong for a real user, and the fix.
 

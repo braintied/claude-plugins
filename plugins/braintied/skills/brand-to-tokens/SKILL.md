@@ -15,7 +15,9 @@ description: Turn brand guidelines (a palette, fonts, a logo, or a pasted guidel
 3. Write the dark-mode set in the `prefers-color-scheme: dark` block. Keep the hue,
    adjust lightness; don't invert.
 4. Check contrast in both modes: `--foreground` on `--background` and `--brand-ink` on
-   `--brand` must be ≥ 4.5:1. Report the ratios.
+   `--brand` must be ≥ 4.5:1. Run
+   `node "${CLAUDE_SKILL_DIR}/../design/scripts/contrast.mjs" src/app/globals.css` and report
+   the ratios. It reads 6-digit hex tokens only (`#1f2a44`), so write them that way.
 5. Fonts: load Google Fonts with `next/font/google` in the root layout and point
    `--font-sans` (and a heading variable if needed) at them.
 6. Logo: put the file in `public/`, use it with `next/image` and real alt text.
