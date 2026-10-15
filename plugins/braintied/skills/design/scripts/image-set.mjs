@@ -52,13 +52,16 @@ if (!set.meta || !set.lock || !Array.isArray(set.frames) || !set.frames.length) 
 const defaults = { size: "1536x1024", quality: "high", ...set.defaults };
 
 // Estimated USD by quality: [square, other] at the base sizes, measured on
-// flare 2026-09/10. Bigger frames scale by pixel count. A guide, not a bill.
+// flare 2026-09/10. Bigger frames cost less than their pixel count suggests:
+// 2560x1440 used 1.34x the image tokens of 1536x1024 at 2.34x the pixels
+// (2026-10-15), so size scales by pixels^0.35. A reference adds about 1,500
+// input tokens. A guide, not a bill; the real cost prints per frame.
 const BASE = { high: [0.053, 0.041], xhigh: [0.094, 0.073], max: [0.211, 0.165] };
 function estimate(size, quality, refs) {
   const [w, h] = size.split("x").map(Number);
   const [square, other] = BASE[quality] ?? BASE.high;
-  const base = w === h ? square * ((w * h) / 1_048_576) : other * ((w * h) / 1_572_864);
-  return base + refs * 0.01;
+  const base = w === h ? square * ((w * h) / 1_048_576) ** 0.35 : other * ((w * h) / 1_572_864) ** 0.35;
+  return base + refs * 0.015;
 }
 
 const ids = new Set();

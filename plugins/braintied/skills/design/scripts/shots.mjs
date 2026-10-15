@@ -89,16 +89,23 @@ function measure() {
 async function scrollThrough(page) {
   // Scroll slowly so lazy images load and scroll-driven motion runs; count the
   // animations seen on the way (CSS, Web Animations and most libraries show up).
+  // Library motion (GSAP, Motion) writes inline styles instead of Web Animations,
+  // so also count elements whose inline transform, opacity or clip changed.
   return page.evaluate(async () => {
+    const styleOf = (el) => `${el.style.transform}|${el.style.opacity}|${el.style.clipPath}|${el.style.visibility}`;
+    const all = () => [...document.querySelectorAll("body *")];
+    const before = new Map(all().map((el) => [el, styleOf(el)]));
+    const moved = new Set();
     let seen = 0;
     for (let y = 0; y < document.body.scrollHeight; y += 400) {
       window.scrollTo(0, y);
       await new Promise((r) => setTimeout(r, 150));
       seen = Math.max(seen, document.getAnimations().length);
+      for (const el of all()) if (before.has(el) && styleOf(el) !== before.get(el)) moved.add(el);
     }
     window.scrollTo(0, 0);
     await new Promise((r) => setTimeout(r, 400));
-    return { animations: seen, gsap: Boolean(window.gsap || window.ScrollTrigger), webgl: Boolean(document.querySelector("canvas")) };
+    return { animations: seen + moved.size, pinned: document.querySelectorAll(".pin-spacer").length, webgl: Boolean(document.querySelector("canvas")) };
   });
 }
 
@@ -155,7 +162,8 @@ for (const path of values.pages.split(",")) {
       const file = `${root}/${name}/${scheme}-${w}`;
       await page.screenshot({ path: `${file}-fold.png` });
       await page.screenshot({ path: `${file}.png`, fullPage: true });
-      if (res.status() >= 400 || signals.overflow > 0) bad++;
+      // A made-up path is expected to 404 (it's how the not-found page gets shot).
+      if (res.status() >= 500 || signals.overflow > 0) bad++;
       results.push({ path, name, scheme, w, status: res.status(), ...signals, ...motion });
       await page.close();
     }
@@ -194,7 +202,7 @@ await browser.close();
 // The signals. Thresholds are the floor for a site that looks designed; a page
 // can pass them all and still fail the verdict.
 const FLOOR = { visualShare: 0.35, phoneVisualShare: 0.25, typeScale: 4, textOnlyRun: 2 };
-console.log("\npage            scheme width  visual  scale  text-run  bleed  anim  overflow");
+console.log("\npage            scheme width  visual  scale  text-run  bleed  moving  overflow");
 for (const r of results) {
   const flags = [];
   if (r.visualShare < (r.w > 1000 ? FLOOR.visualShare : FLOOR.phoneVisualShare)) flags.push("first screen is mostly text");
@@ -202,7 +210,7 @@ for (const r of results) {
   if (r.textOnlyRun > FLOOR.textOnlyRun) flags.push(`${r.textOnlyRun} text-only sections in a row`);
   if (r.overflow > 0) flags.push("sideways scroll");
   console.log(
-    `${r.path.padEnd(15)} ${r.scheme.padEnd(6)} ${String(r.w).padEnd(6)} ${(r.visualShare * 100).toFixed(0).padStart(4)}%  ${r.typeScale.toFixed(1).padStart(5)}  ${String(r.textOnlyRun).padStart(8)}  ${String(r.fullBleed).padStart(5)}  ${String(r.animations).padStart(4)}  ${String(r.overflow).padStart(6)}px  ${flags.join("; ")}`,
+    `${r.path.padEnd(15)} ${r.scheme.padEnd(6)} ${String(r.w).padEnd(6)} ${(r.visualShare * 100).toFixed(0).padStart(4)}%  ${r.typeScale.toFixed(1).padStart(5)}  ${String(r.textOnlyRun).padStart(8)}  ${String(r.fullBleed).padStart(5)}  ${String(r.animations).padStart(6)}  ${String(r.overflow).padStart(6)}px  ${flags.join("; ")}`,
   );
 }
 if (!refs.length) console.log("\nNo docs/brand/references.json, so nothing to compare against. Stage 1 asks for references.");

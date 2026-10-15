@@ -58,8 +58,12 @@ three details fights the reference and consistency drops.
 
 **Cutouts:** `"background": "transparent"` with a `.png` out and no scenery in the
 prompt ("the steel carrier alone, three-quarter view, soft shadow under it"). Use it for
-objects that sit on the page itself or move over sections. Transparent output is reliable
-with a reference image (gpt-image-2.5-sunburst); check the alpha before using it.
+objects that sit on the page itself or move over sections. Give a cutout a reference
+(usually the anchor frame, so it's the same object): measured on one carrier, flare's
+transparent output kept a grey half-transparent halo on about a third of its pixels, which
+shows on any dark or coloured page; sunburst with the anchor as reference kept 1% (just
+the edges). Look at every cutout over the brand colour and the dark background before
+using it.
 
 ## 3. What makes images look generated (avoid in every prompt)
 
@@ -89,7 +93,8 @@ time. A wrong anchor fixed now costs one frame; found after the set, it costs th
 |---|---|---|
 | `1536x1024` landscape, `1024x1536` portrait | about $0.04 | about $0.07 |
 | `1024x1024` square | about $0.05 | about $0.09 |
-| `2560x1440` wide hero (bigger frames scale by pixels) | about $0.10 | about $0.17 |
+| `2560x1440` wide hero | about $0.06 | about $0.10 |
+| any frame with a reference image | add about $0.015 | add about $0.015 |
 
 A photographic site of 12 frames at `high` is about $0.50–1.20. When the person caps the
 spend, plan the set to about two thirds of the cap and hold the rest for retakes: one

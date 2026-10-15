@@ -59,8 +59,12 @@ export async function generateImage(o) {
   const size = o.size ?? "1536x1024";
   const quality = o.quality ?? "high";
   const refs = o.refs ?? [];
-  const model = o.model ?? (refs.length ? "gpt-image-2.5-sunburst" : "gpt-image-2.5-flare");
-  const format = extname(o.out).slice(1) === "webp" ? "webp" : "png";
+  // Sunburst for references and for cutouts: flare's "transparent" left a grey
+  // half-transparent halo on a third of the pixels (measured 2026-10-15); sunburst
+  // with a reference left 1%.
+  const model = o.model ?? (refs.length || o.background === "transparent" ? "gpt-image-2.5-sunburst" : "gpt-image-2.5-flare");
+  const ext = extname(o.out).slice(1).toLowerCase();
+  const format = ext === "webp" ? "webp" : ext === "jpg" || ext === "jpeg" ? "jpeg" : "png";
   if (o.background === "transparent" && format !== "png" && format !== "webp") {
     throw new Error(`${o.out}: a transparent image must be .png or .webp`);
   }
