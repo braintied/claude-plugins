@@ -48,22 +48,28 @@ if (!process.env.OPENAI_API_KEY) {
   }
 }
 const apiKey = process.env.OPENAI_API_KEY;
-if (!apiKey) fail("OPENAI_API_KEY is not set. Add it to .env.local (get one at platform.openai.com/api-keys).");
+if (!apiKey || apiKey.includes("..."))
+  fail("OPENAI_API_KEY is not set. Run `pnpm keys` in your own Terminal and paste it there (platform.openai.com/api-keys). Never paste it in the chat.");
 
 console.log(`Generating ${values.size} with ${values.model} (quality ${values.quality})...`);
-const response = await fetch("https://api.openai.com/v1/images/generations", {
-  method: "POST",
-  headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-  body: JSON.stringify({
-    model: values.model,
-    prompt,
-    size: values.size,
-    quality: values.quality,
-    n: 1,
-  }),
-});
-
-const body = await response.json();
+let response;
+let body;
+try {
+  response = await fetch("https://api.openai.com/v1/images/generations", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: values.model,
+      prompt,
+      size: values.size,
+      quality: values.quality,
+      n: 1,
+    }),
+  });
+  body = await response.json();
+} catch (error) {
+  fail(`Couldn't get an answer from OpenAI (${error.message}). Check the internet and run it again.`);
+}
 if (!response.ok) fail(`OpenAI error ${response.status}: ${body?.error?.message ?? JSON.stringify(body)}`);
 const b64 = body?.data?.[0]?.b64_json;
 if (!b64) fail("OpenAI returned no image data.");

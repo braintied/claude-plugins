@@ -1,6 +1,6 @@
 ---
 name: explain
-description: Explain how something in this project works — a feature, a file, an error, a concept like row-level security or server actions — in plain language for someone learning to build, using the project's own code as the example. Use when someone asks "how does X work", "what is X", "why did that happen", "what does this file do", or types /explain.
+description: Explain how something in this project works — a feature, a file, an error, a concept like row-level security or server actions — in plain language for someone learning to build, using the project's own code as the example. Use when someone asks "how does X work", "what is X", "why did that happen", "what does this file do", "explain this", "what does this error mean", or types /explain.
 ---
 
 # Explain

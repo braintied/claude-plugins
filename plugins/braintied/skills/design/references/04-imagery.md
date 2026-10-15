@@ -16,6 +16,11 @@ before spending money. Two to four images are usually enough; when the direction
 typographic (a timetable, a ticket), fewer images and more type is the stronger page.
 The social share image is optional on day one.
 
+**No OpenAI key?** Don't stop the person to make one mid-session. Choose one: their own
+photos in `public/images/` (judged against the refusals the same way), a typographic
+page where the direction's page form carries it with no photography, or imagery later.
+Write which in `docs/brand/images.md`.
+
 Plan frames the model can draw. Hands *operating a mechanism* (squeezing a brake lever,
 turning a key, typing) fail most often: the hand ends up beside the part, not on it. Show
 the object, the result, or hands doing something broad (pressing flat, holding, cutting).
