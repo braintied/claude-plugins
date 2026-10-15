@@ -15,7 +15,13 @@ if (!files.length) {
 }
 const pc = await load("@braintied/prompt-craft");
 if (!("ARRANGEMENT_PROVENANCE" in pc)) {
-  console.error("This @braintied/prompt-craft is older than 3.1.0 and misses the arrangement rule. Run:\n  pnpm add -D @braintied/prompt-craft@latest");
+  console.error(
+    "This @braintied/prompt-craft is older than 3.1.0 and misses the arrangement rule. Run:\n" +
+      "  pnpm add -D @braintied/prompt-craft@latest\n" +
+      "If pnpm still installs an older version, the project's minimumReleaseAge is holding back a\n" +
+      "release from the last day. Add '@braintied/prompt-craft@3.1.0' under minimumReleaseAgeExclude\n" +
+      "in pnpm-workspace.yaml, then run the add again.",
+  );
   process.exit(2);
 }
 const NO_IMPERFECTION = /imperfection:/i;

@@ -7,7 +7,9 @@ customer will hold) recreated in code, playing through the one moment that matte
 ## The shape: steps in CSS, one observer, no React state
 
 The steps are elements with a step index. CSS plays them in order with a delay per
-step and `fill-mode: both`, so each lands on its final frame and stays there. A single
+step and `fill-mode: backwards`: each holds its empty first frame until it plays, then
+rests on the element's own style, which is the finished frame. (`both` looks the same
+but keeps the animation applied, which breaks `backdrop-filter` underneath.) A single
 `IntersectionObserver` starts the play when the demo is seen; it writes a data
 attribute, not React state, so there is nothing to re-render and nothing for
 `react-hooks/set-state-in-effect` to flag.
@@ -48,7 +50,7 @@ export function Demo() {
 ```css
 /* globals.css */
 @keyframes demo-in { from { opacity: 0; transform: translateY(4px); } }
-.demo .demo-step { animation: demo-in 300ms ease-out both; animation-play-state: paused; }
+.demo .demo-step { animation: demo-in 300ms ease-out backwards; animation-play-state: paused; }
 .demo[data-seen] .demo-step { animation-play-state: running; }
 @media (prefers-reduced-motion: reduce) {
   .demo .demo-step { animation: none; }

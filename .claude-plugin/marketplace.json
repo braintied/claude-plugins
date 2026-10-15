@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "braintied",
-      "description": "Design beautiful, intentional sites and ship them safely: a six-stage /design pipeline (brief, direction, identity, imagery, composition, critique), plus /explain, /next, /learn, /brand-to-tokens, /review-my-diff and /ship-it.",
+      "description": "Design bespoke, art-directed sites and ship them safely: a six-stage /design pipeline (brief, direction and art direction, identity, image set, composition with motion, critique against real reference sites), plus /explain, /next, /learn, /brand-to-tokens, /review-my-diff and /ship-it.",
       "source": "./plugins/braintied",
       "category": "development",
       "homepage": "https://github.com/braintied/claude-plugins/tree/main/plugins/braintied"

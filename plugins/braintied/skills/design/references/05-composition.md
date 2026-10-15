@@ -5,8 +5,11 @@ where every page and every section has a job and looks like it was decided.
 
 A site looks like a template for one reason more than any other: nothing described what
 a *section* could be, so every section became the same band of centred type, or the same
-label-left/content-right split. This stage fixes that by giving each section a written
-job and a named pattern before any code.
+label-left/content-right split. A site looks *generated* for a second reason: nothing
+on it was art-directed. One photograph, tidy type, nothing moves, every section the
+same width. This stage fixes both: every section gets a written job and a named
+pattern, and every page gets the direction's world layer, its pictures at full size,
+and its signature mechanism, before any code.
 
 ## 1. Plan the site: `docs/brand/site-plan.md`
 
@@ -28,6 +31,37 @@ add what it does.
 Every page also needs what is in [05b-site-essentials](05b-site-essentials.md) (titles,
 share image, icon, sitemap). Do those as you build each page, not at the end.
 
+### First screens
+
+Write each page's first screen before its sections, as one composition:
+
+- **One dominant visual, full width or close to it**: a stage 4 frame, the object, the
+  field. Not a photograph in one half of a two-column grid; that is the template hero.
+- **The brand in the first screen is unmistakable.** Cover the nav and ask whether the
+  first screen could belong to another company. If yes, the world layer isn't on it yet.
+- **The budget:** the wordmark, one headline at the display step, one sentence, the
+  action, and the visual. Nothing else: no feature list, no stat strip, no badges.
+- **Scale contrast:** on desktop the headline is at least five times the body size.
+- The headline can sit *on* the picture (with the scrim token for contrast) or be the
+  picture (typographic world). Don't box it.
+
+### The motion plan
+
+From the direction's **Motion** block, write in `site-plan.md`:
+
+- **The signature mechanism**, where it lives (which page, which section), what drives it
+  (scroll position, time on load, the pointer), and its reduced-motion frame.
+- **The page-level motion** the world layer needs: frames dissolving as you scroll
+  (photographic), a pinned sequence (film), the object coming apart (object), the field
+  re-forming (field), headlines resolving (typographic).
+- **Entrances:** one per section at most, from the direction's durations.
+
+Two or three intentional motions per page is the target: the signature, the page-level
+motion, quiet entrances. More than that and nothing lands. None at all and the page
+reads as unfinished next to the references.
+
+The engines and tested code for each are in [motion-recipes](motion-recipes.md).
+
 ### Sections
 
 For each page, list its sections in order. Each line has three parts:
@@ -46,11 +80,13 @@ For each page, list its sections in order. Each line has three parts:
   with `node "<patterns script>" --engines css` (install once with
   `pnpm add -D @braintied/site-engine`), then read the full notes for the ones you pick
   with `--id <pattern>`. Each pattern gives a build recipe with real numbers, the
-  constraints, what a reviewer checks, and what it must *not* become. Declare only the
-  engines the project really has: `css` alone unless you add a scroll or animation
-  library. A pattern that needs a missing engine shows as blocked, and the catalog
-  offers a still pattern composed for that role. A still section reads as intended; a
-  scroll pattern with its motion removed reads as broken.
+  constraints, what a reviewer checks, and what it must *not* become. Declare the
+  engines the direction's **World layer** names and install them first: photographic,
+  film and object worlds use `--engines css,gsap,scroll` (`pnpm add gsap @gsap/react
+  lenis`); a field adds `canvas2d`; a purely typographic page can stay `css,gsap`. A
+  pattern that needs an engine you didn't declare shows as blocked. Don't declare an
+  engine to unlock a pattern you won't build properly: a scroll pattern with its motion
+  half-done reads as broken.
 - **Content** is the actual words and data, from the brief. Anything on the brief's
   **Can't claim yet** line is out, or appears only inside something labelled *Example*.
 
@@ -111,6 +147,11 @@ don't write one version:
 3. Keep the winner and steal one phrase from the runner-up. Note the losers in
    `site-plan.md` so nobody rewrites the same weak line later.
 
+Before writing, read ten headlines on [H1 Gallery](https://h1gallery.com): short,
+concrete, one turn. Write in the direction's **Copy** block: its lexicon (the world's
+own words), its headline rule, and none of its banned words. A headline that would make
+sense on a competitor's site loses, however well it reads.
+
 ## 3. Show the product, don't describe it
 
 If there's a product, recreate a small piece of the real interface in code and let it
@@ -124,6 +165,16 @@ the number will be measured instead. It can still move: a ticket being stamped, 
 being ticked one by one, as long as it rests on its finished frame.
 
 ## Every page has something to look at
+
+- **Pictures at the size of the page.** Full-bleed frames carry whole sections; adjacent
+  frames can dissolve into each other through a mask instead of meeting at a hard edge
+  (recipe in [motion-recipes](motion-recipes.md)). A photograph at a third of the page
+  width is an illustration of the text; at full width it is the world.
+- **The graphic kit is used**, not just defined: the motif from stage 3 appears on every
+  page, and the object (if there is one) is drawn at a size you can read its parts.
+- **Text on pictures** sits on a scrim (add a `--scrim` token: the ground colour at
+  40–70%, as a gradient from the text's side) so it reads in both themes. The contrast
+  script can't see a photograph; judge it in the stage 6 screenshots, at phone width.
 
 - **The first screen of every page has one dominant visual:** a photograph from stage 4,
   the product object or demo, or a drawn object from the world. Never a grey box, a
@@ -159,18 +210,24 @@ being ticked one by one, as long as it rests on its finished frame.
 - **Spacing from one scale** (4, 8, 12, 16, 24, 32, 48, 64, 96, 128). Generous between
   sections; tight within them.
 - **Type from the stage 3 scale only.** At most three sizes per section.
-- **The brand color only on the main action** and the invariant.
-- **Motion with a reason:** at most one entrance per section, 200–400ms, ease-out, and
-  only on engines you declared. Declare keyframes with `animation-fill-mode: both` and
-  let one global `prefers-reduced-motion: reduce` rule set durations to near zero, so
-  everything lands on its final frame. A reveal that hides content under reduced motion
-  is a bug.
+- **The brand colour goes where the direction's Colour ownership line says**, no further
+  and no less.
+- **Motion from the plan:** durations from the direction's motion character (exact:
+  150–250ms; settled: 600–900ms, long ease-out such as `expo.out`; never bounce or
+  elastic), exits shorter than entrances, and only on engines you declared. Under
+  `prefers-reduced-motion: reduce` every motion lands on its final frame: GSAP work goes
+  inside `gsap.matchMedia()` with a reduced branch, smooth scroll is off, CSS keyframes
+  drop to near-zero duration. A reveal that hides content under reduced motion is a bug.
+  Use `animation-fill-mode: backwards` for entrances, not `both`: a retained
+  `both`/`forwards` animation on an ancestor stops `backdrop-filter` working underneath.
 - **Mobile first:** design at 375px wide, then widen. No horizontal scroll ever.
 - **Accessible:** one `h1` per page, headings in order, `alt` text that says what is in
   the picture, visible focus states, 44px tap targets, and every animated or decorative
   demo has an `sr-only` sentence saying what it shows.
-- **Fast:** hero image with `priority`, everything else lazy; no animation library
-  unless a pattern you chose needs it.
+- **Fast:** first-screen image with `priority`, everything else lazy. GSAP, ScrollTrigger
+  and Lenis together are small; a canvas field starts after first paint, pauses when off
+  screen, and draws less on a slow device. Nothing heavy on a phone that a still frame
+  can do.
 
 ## Check
 

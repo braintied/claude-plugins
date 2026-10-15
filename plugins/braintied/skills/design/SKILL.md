@@ -1,6 +1,6 @@
 ---
 name: design
-description: Take an idea from a sentence to a beautiful, intentional website in six stages — brief, direction, identity, imagery, composition, critique — so the result looks decided rather than generated. Use when someone wants to design or redesign a site or landing page, says their site "looks like AI made it", "looks generic", or asks for a brand, a look, or a homepage.
+description: Take an idea from a sentence to a bespoke, art-directed website in six stages — brief, direction and art direction, identity, imagery, composition, critique — with a full image set, drawn graphics, scroll motion and a signature moment, judged side by side against real reference sites, so the result looks designed rather than generated. Use when someone wants to design or redesign a site or landing page, says their site "looks like AI made it", "looks generic", or asks for a brand, a look, or a homepage.
 ---
 
 # Design
@@ -9,23 +9,35 @@ Sites look generic when nobody decided what they should feel like, so every choi
 defaulted to the safest option. Safe is generic. This pipeline forces the decisions, in
 order, and writes each one down so every later step (and every later session) reads it.
 
+## The bar
+
+Aim for a site that could sit in a design gallery next to the references the person
+chose, not a tidy landing page. In practice that means: a world that fills every first
+screen, pictures from one art-directed set used at full size, drawn graphics from the
+world, two or three motions with a reason (one of them a signature only this product
+could have), type with real scale contrast, and copy in the world's own words. A page
+that is correct, clean and quiet fails this bar. Stage 6 holds the result against the
+references, screenshot beside screenshot, and scores it.
+
 ## The six stages
 
 Run them in order. Each stage reads the files the earlier ones wrote. Show the person
 the result of each stage and get a yes before the next; their taste is the point.
 
 **Short on time** (a workshop day): ask for one yes after stages 1–2 together and one
-after 3–4 together (show the image plan and cost before generating). Never skip the
-yes before money is spent or before code is written.
+after 3–4 together (show the image plan, its cost and the two sample frames before the
+rest of the set). Never skip the yes before money is spent or before code is written.
+Short on time cuts approvals, never the bar: the set, the motion plan and the
+side-by-side critique still happen.
 
 | # | Stage | Reads | Writes | Reference |
 |---|---|---|---|---|
 | 1 | Brief | the person | `docs/brand/brief.md` | [01-brief](references/01-brief.md) |
-| 2 | Direction | brief | `docs/brand/direction.md` | [02-direction](references/02-direction.md) |
+| 2 | Direction and art direction | brief, references | `docs/brand/direction.md`, `references.json` | [02-direction](references/02-direction.md), [reference-sites](references/reference-sites.md) |
 | 3 | Identity | direction | tokens in `globals.css`, `docs/brand/identity.md` | [03-identity](references/03-identity.md) |
-| 4 | Imagery | direction, identity | `public/images/*`, `docs/brand/images.md` | [04-imagery](references/04-imagery.md) |
-| 5 | Composition | all of the above | `docs/brand/site-plan.md`, every page and the site essentials | [05-composition](references/05-composition.md), [05b-site-essentials](references/05b-site-essentials.md), [product-demo](references/product-demo.md) |
-| 6 | Critique | the running site | fixes + `docs/brand/critique.md` | [06-critique](references/06-critique.md) |
+| 4 | Imagery | direction, identity | `docs/brand/prompts.json`, `public/images/*`, `docs/brand/images.md` | [04-imagery](references/04-imagery.md) |
+| 5 | Composition | all of the above | `docs/brand/site-plan.md`, every page and the site essentials | [05-composition](references/05-composition.md), [motion-recipes](references/motion-recipes.md), [05b-site-essentials](references/05b-site-essentials.md), [product-demo](references/product-demo.md) |
+| 6 | Critique | the running site, the references | fixes + `docs/brand/critique.md`, `docs/brand/shots/` | [06-critique](references/06-critique.md) |
 
 The stage 4 image script lives at `${CLAUDE_SKILL_DIR}/scripts/generate-image.mjs`.
 Use that exact path; the reference files call it `<image script>`. The palette check
@@ -38,6 +50,8 @@ Helper scripts, all in `${CLAUDE_SKILL_DIR}/scripts/`, run from the project fold
 | `name-score.mjs` (`<name script>`) | 3 | Ranks name candidates; obvious names sink | `pnpm add -D @braintied/naming` |
 | `contrast.mjs` | 3 | Contrast of every token pair, light and dark | nothing |
 | `audit-prompt.mjs` (`<audit script>`) | 4 | Checks image prompts before money is spent | `pnpm add -D @braintied/prompt-craft` (3.1.0+) |
+| `image-set.mjs` (`<image-set script>`) | 4 | Composes every prompt from `prompts.json`, prices the set, makes it in parallel, keeps every take | `OPENAI_API_KEY` in `.env.local` |
+| `shots.mjs` (`<shots script>`) | 2, 6 | Screenshots every page beside the references, with the signals | `pnpm add -D playwright` |
 | `generate-image.mjs` | 4 | One image, with its cost | `OPENAI_API_KEY` in `.env.local` |
 | `patterns.mjs` (`<patterns script>`) | 5 | The section-pattern catalog: what a section can be | `pnpm add -D @braintied/site-engine` |
 
@@ -56,8 +70,14 @@ composed before the direction exists will be the generic page.
   Never compose around a placeholder ("image not generated yet", a grey box, a dashed
   frame). If the person won't spend on images, go back to stage 4 and re-plan the set
   as drawn objects, type and product demos, then compose to that plan.
-- Stage 6 opens with the "designed or generated?" verdict (see 06) before any mechanics.
-  A page that passes every mechanical check can still look made in five minutes.
+- Stage 4 makes the anchor frame (and one more) before the rest of the set, and the
+  person sees them before the set is paid for.
+- Stage 5 writes each page's first screen and the motion plan (the signature mechanism,
+  the page-level motion) into `site-plan.md` before code. A site with no motion plan is
+  the static template again.
+- Stage 6 opens with the "designed or generated?" verdict and the art-direction scores
+  (see 06) before any mechanics, from `compare.html`, not from memory. A page that
+  passes every mechanical check can still look made in five minutes.
 
 ## Starting points
 

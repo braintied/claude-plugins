@@ -1,20 +1,23 @@
 # Stage 4 · Imagery
 
-Goal: photographs and illustrations that belong to this direction and don't read as AI.
+Goal: a set of pictures that looks like one shoot by one photographer (or one
+illustrator) in one world, big enough to carry every page, and none of it reads as AI.
 
-## Plan the set before generating anything
+A site with one hero photograph and two small extras still looks like a template with a
+picture in it. The sites people remember are built *out of* their pictures. Plan the
+set from the direction's **World layer** and **Art direction · Images** block.
 
-List every image the site needs (hero, 2–4 section images, social share image at
-1536×800). For the whole set decide:
+## 1. Size the set from the world layer
 
-- **Constant:** what stays the same in every image (light, palette, lens, grain,
-  setting). This is what makes them look like one shoot.
-- **Varying:** the one thing that changes (subject, moment, distance).
+| World layer | Set | Why |
+|---|---|---|
+| Photographic | 8–14 frames | Every page opens on a full-bleed frame, and sections change frame as you scroll |
+| Film | 6–10 frames in order, one moment apart | The pinned sequence plays them like a film |
+| Object | 2–4 frames plus the object drawn in code | The object leads; photographs place it in the world |
+| Field or typographic | 0–4 frames | The field or the type is the picture; photographs are breaths between |
 
-Write the plan to `docs/brand/images.md` with its cost (sizes below), and show the person
-before spending money. Two to four images are usually enough; when the direction is
-typographic (a timetable, a ticket), fewer images and more type is the stronger page.
-The social share image is optional on day one.
+Plus the cutouts the composition needs (an object with a transparent background to lay
+over a page), and phone crops for every full-bleed frame (step 4).
 
 **No OpenAI key?** Don't stop the person to make one mid-session. Choose one: their own
 photos in `public/images/` (judged against the refusals the same way), a typographic
@@ -25,74 +28,95 @@ Plan frames the model can draw. Hands *operating a mechanism* (squeezing a brake
 turning a key, typing) fail most often: the hand ends up beside the part, not on it. Show
 the object, the result, or hands doing something broad (pressing flat, holding, cutting).
 
-## Writing each prompt
+## 2. Write the set as one file: `docs/brand/prompts.json`
 
-Write it like a brief to a photographer, in this order:
+Every prompt is three parts, so the world is written once and every frame shares it:
 
-1. **Shot:** subject, action, moment. Specific people doing a specific thing.
-2. **Place:** where, time of day, what's around them.
-3. **Camera:** lens and distance ("35mm, waist height, three metres back"), depth of
-   field, framing (where the subject sits; leave room for text if it's a hero).
-4. **Light:** the source and its quality ("low sun through a doorway, hard shadows").
-5. **Craft:** film stock or medium ("Portra 400 grain", "risograph two-color"), palette
-   tied to the tokens from stage 3.
-6. **One imperfection, named:** a flyaway hair, a chipped cup, a slightly crooked
-   horizon, dust in the light. Perfect is what makes AI images look like AI.
+- **meta** (60–90 words, the same for every frame): the place, the hour, the light and
+  where it comes from, the film or medium, the palette from materials in the world.
+- **main** (40–120 words, one per frame): this frame only. The first 50 words carry the
+  picture: shot size and subject first ("Close, waist height: a woman's hands lifting
+  the lid off the top tier"), then the moment, where things are in the frame (thirds,
+  room for type), the one formal device it carries, and it ends with **one named
+  imperfection** on its own line: `Imperfection: one tier dented near the clasp.`
+- **lock** (the same for every frame): closing constraints said as what *is* there,
+  not what isn't ("muted natural colour, real materials, grain visible in the
+  shadows"), the palette again in three words, and "no text, letters or logos in frame".
 
-## What makes images look generated (avoid in every prompt)
+Each frame also says what it's for (`use`), its `device`, its `size` and its `out` path.
+The format is at the top of `<image-set script>`. Write `docs/brand/images.md` in prose
+beside it: the constants, the one axis that varies across the set, and which frame goes
+where on which page.
 
-- Everyone smiling at the camera; perfect skin and teeth.
+**One anchor frame.** Pick the frame that best shows the world (usually the home page's
+first screen). It is made first and judged before the rest.
+
+**A recurring object** (the product, a carrier, a slip) drifts between frames when it's
+described in words each time. Make it once (a clean frame or a reference sheet), then
+list that file in later frames' `refs`; describe it there in 2–3 details only. More than
+three details fights the reference and consistency drops.
+
+**Cutouts:** `"background": "transparent"` with a `.png` out and no scenery in the
+prompt ("the steel carrier alone, three-quarter view, soft shadow under it"). Use it for
+objects that sit on the page itself or move over sections. Transparent output is reliable
+with a reference image (gpt-image-2.5-sunburst); check the alpha before using it.
+
+## 3. What makes images look generated (avoid in every prompt)
+
+- Everyone smiling at the camera; perfect skin and teeth. Prefer the moment *after*.
 - Centered subject on a blurred bokeh background.
-- Glowing, teal-and-orange, or purple-gradient lighting.
-- Floating devices, holograms, abstract "network" shapes.
+- Glowing, teal-and-orange, neon, bloom, lens flare, or purple-gradient lighting.
+- Floating devices, holograms, particles, abstract "network" shapes.
 - Text inside the image (add text in code instead).
-- Words like "stunning", "8k", "ultra-detailed", "hyperrealistic" in the prompt.
-- Identical objects in a neat row or grid ("six mackerel side by side"). The model
-  arranges things like a product shot. Say how they were put down instead: "tipped in
-  loosely so they overlap", "left where he dropped them".
+- Words like "stunning", "8k", "ultra-detailed", "hyperrealistic", "award-winning".
+- Identical objects in a neat row or grid ("six mackerel side by side"). Say how they
+  were put down instead: "tipped in loosely so they overlap", "left where he dropped them".
+- Perfect symmetry, plastic surfaces, oversaturated colour.
 
-## Audit before you spend
-
-`node "<audit script>" docs/brand/prompts/*.txt` runs the anti-slop audit and flags
-arranged-object phrasing and a missing imperfection line. Fix what it flags first; it
-costs nothing.
-
-## Generate
-
-Run it from the project folder; `<image script>` is the full path given in the design
-skill's SKILL.md. The script uses OpenAI's newest image model (`gpt-image-2.5-flare`)
-and needs `OPENAI_API_KEY` in `.env.local`. The person adds it themselves (`pnpm keys`
-in idea-to-mvp projects); never ask them to paste it in the chat.
+## 4. Audit, sample, then the set
 
 ```bash
-node "<image script>" \
-  --prompt-file docs/brand/prompts/hero.txt \
-  --out public/images/hero.png \
-  --size 1536x1024
+node "<image-set script>"                         # writes prompts/<id>.txt, prints the plan and cost
+node "<audit script>" docs/brand/prompts/*.txt    # free; fix what it flags
+node "<image-set script>" --generate --sample 2 --budget 3   # the anchor and one more
 ```
 
-Save each prompt as a `.txt` under `docs/brand/prompts/` so it can be rerun and
-improved. Sizes: both edges multiples of 16, longest edge ≤ 3840, ratio ≤ 3:1.
+Show the person the plan with its cost, then the two samples. Only when the anchor is
+right does the rest of the set get made (`--generate --budget <amount>`), several at a
+time. A wrong anchor fixed now costs one frame; found after the set, it costs the set.
 
-| Size | Default quality (`high`) |
-|---|---|
-| `1536x1024` landscape, `1024x1536` portrait | about $0.04 |
-| `1024x1024` square | about $0.05 (more tokens than landscape) |
+| Size | `high` (default) | `xhigh` (finals) |
+|---|---|---|
+| `1536x1024` landscape, `1024x1536` portrait | about $0.04 | about $0.07 |
+| `1024x1024` square | about $0.05 | about $0.09 |
+| `2560x1440` wide hero (bigger frames scale by pixels) | about $0.10 | about $0.17 |
 
-The script prints the tokens and the cost of every image; add them up in `images.md`.
-Each image takes about 20–25 seconds, so generate the whole set at once (one command per
-image, run in parallel) rather than one after another.
+A photographic site of 12 frames at `high` is about $0.50–1.20. The script prints the
+real cost of every frame and keeps a running total in `docs/brand/images.json`.
 
-Before a retake, copy the prompt to `<name>.v1.txt` so the one changed line shows in a
-diff.
+**Phone crops.** A 3:2 frame shown full-screen on a phone shows about a third of its
+width. For each full-bleed frame either set `object-position` on the subject (fine when
+the subject sits in the middle third), or make a portrait version (`1024x1536`, same
+main, "framed tall, subject in the upper middle") and serve it with `<picture>`.
 
-## Judge every result
+## 5. Judge the set
 
-Open each image and check it against the direction's refusals and the constants. Retake
-by changing **one** line of the prompt at a time, so you know what fixed it. Two bad
-takes of the same frame (the first and one retake) with the same fault means the plan is
-wrong, not the prompt: replace the frame in the set plan with one the model can draw, and
-keep the rejected take in `docs/brand/rejected/` with one line on why.
+Open every frame. Then put them side by side (a contact sheet, or the folder in a grid
+view) and judge the *set*, not the frames:
 
-Use images with `next/image`, real `alt` text describing what's in them, and `priority`
-on the hero only.
+- **One world:** do they look like one shoot? If one frame's light or colour is off,
+  it's the one to retake, however good it is alone.
+- **Not one picture repeated:** if they all share the same distance and angle, vary the
+  shot size (wide, middle, close) across the set.
+- Against the direction's refusals and the lock.
+
+Retake by changing **one** line of `main` at a time, so you know what fixed it
+(`--generate --only <id>`; every take is kept in `docs/brand/takes/<id>/` with its
+prompt). Two takes of the same frame with the same fault means the plan is wrong, not
+the prompt: replace the frame with one the model can draw.
+
+Then fill each frame's `describes` line in `images.json` from what you actually see. It
+becomes the `alt` text.
+
+Use images with `next/image` (`sizes` set for full-bleed: `100vw`), `priority` on the
+first screen's image only, and a token colour as the background while it loads.
