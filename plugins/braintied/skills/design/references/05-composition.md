@@ -1,59 +1,129 @@
 # Stage 5 · Composition
 
-Goal: pages built from the brief, direction, identity and images, where every section
-earns its place.
+Goal: a whole site, not one page, built from the brief, direction, identity and images,
+where every page and every section has a job and looks like it was decided.
 
-## Plan the page as a story first
+A site looks like a template for one reason more than any other: nothing described what
+a *section* could be, so every section became the same band of centred type, or the same
+label-left/content-right split. This stage fixes that by giving each section a written
+job and a named pattern before any code.
 
-Before code, write the section list with one sentence each of what it must make the
-visitor believe. A landing page that converts usually runs:
+## 1. Plan the site: `docs/brand/site-plan.md`
 
-1. **Hero:** who it's for and what changes, in the brief's own words, plus the one
-   action. The image or demo shows the moment *after*.
-2. **The problem as they live it:** the "today" from the brief, specific.
-3. **How it works:** three steps max, shown, not listed.
-4. **Proof:** only real proof (a quote you actually have, a number you can source, the
-   founder's story). No invented testimonials. If there is none yet, use the founder's
-   "why us" instead.
-5. **The action again**, with what happens after they click.
+### Pages
 
-Cut any section whose sentence repeats another. Shorter is usually better.
+A product that isn't live yet usually needs these. Cut what the brief doesn't support;
+add what it does.
 
-## Show the product, don't describe it
+| Page | Its job |
+|---|---|
+| `/` Home | Who it's for, what changes for them, the one action. |
+| `/how-it-works` | The mechanism in enough detail that a sceptic believes it could work. |
+| A page for the other side | The people the product also depends on: the cooks, the cafés, the mechanics. They have different questions. |
+| `/questions` | The real objections, answered in full, on the page (not hidden in accordions). |
+| `/join` | The action on its own, and exactly what happens after. |
+| `/privacy` | What the waitlist stores, why, and how to be removed. Short and true. |
+| `not-found` | A 404 that is still in the world. |
 
-If there's a product, recreate a small piece of the real interface in code (a card, a
-message, a booking slot) and let it animate through the one moment that matters.
-Label illustrative data as illustrative.
+Every page also needs what is in [05b-site-essentials](05b-site-essentials.md) (titles,
+share image, icon, sitemap). Do those as you build each page, not at the end.
+
+### Sections
+
+For each page, list its sections in order. Each line has three parts:
+
+```markdown
+## /how-it-works
+1. **Job:** make the 6:30 market run feel real and specific · **Pattern:** numbered-rail-explainer · **Content:** the three times, what happens at each
+2. **Job:** answer "how do I know it's fresh?" · **Pattern:** objection-answer-pair · **Content:** ...
+```
+
+- **Job** is what the section must make the visitor believe or do, in one sentence. Not
+  "Features" or "How it works": "defuses the 'is it fresh' doubt". A section named for
+  what it contains drifts into a feature list within three edits; a section named for
+  its job stays an argument.
+- **Pattern** comes from the section-pattern catalog in `@braintied/site-engine`. List it
+  with `node "<patterns script>" --engines css` (install once with
+  `pnpm add -D @braintied/site-engine`), then read the full notes for the ones you pick
+  with `--id <pattern>`. Each pattern gives a build recipe with real numbers, the
+  constraints, what a reviewer checks, and what it must *not* become. Declare only the
+  engines the project really has: `css` alone unless you add a scroll or animation
+  library. A pattern that needs a missing engine shows as blocked, and the catalog
+  offers a still pattern composed for that role. A still section reads as intended; a
+  scroll pattern with its motion removed reads as broken.
+- **Content** is the actual words and data, from the brief. Anything on the brief's
+  **Can't claim yet** line is out, or appears only inside something labelled *Example*.
+
+Then apply the direction's **Page form** on top: the pattern says what the section
+does, the page form says what it looks like in this world (a ledger in a menu card is
+set as a menu; in a station board, as a timetable).
+
+Rules for the plan:
+
+- No two sections on a page use the same pattern, and no single layout repeats on more
+  than two sections of the site.
+- Cut any section whose job repeats another's. Shorter wins.
+- Evidence patterns (`attributed-review-wall`, `credential-strip`) need real records. A
+  product with none uses the founder's "why us" or a `specimen-ledger` of the method
+  instead, never invented proof.
+
+Show the plan to the person before building. This is where "make it better" is cheap.
+
+## 2. Write the words with a tournament
+
+For the hero headline, the home page's first sentence and each page's first line,
+don't write one version:
+
+1. Write five versions in the direction's voice, each taking a different angle.
+2. Judge each against three readers: **the sceptic** (which claim can't they believe?),
+   **the first user from the brief, tired, on their phone** (which one would they stop
+   scrolling for?), and **a competitor** (which one could they also say? that one loses).
+3. Keep the winner and steal one phrase from the runner-up. Note the losers in
+   `site-plan.md` so nobody rewrites the same weak line later.
+
+## 3. Show the product, don't describe it
+
+If there's a product, recreate a small piece of the real interface in code and let it
+play through the one moment that matters. The mechanics (a scripted state machine,
+played when seen, reduced-motion safe) are in [product-demo](product-demo.md).
 
 No product yet? Recreate the *thing the customer will hold*: the slip in the parcel,
 the ticket, the signed check sheet. Label it in the world's own words ("Specimen",
-"Example slip") and leave out any number from the brief's **Can't claim yet** line; a
-field can say how the number will be measured instead.
+"Example slip") and leave out any number from **Can't claim yet**; a field can say how
+the number will be measured instead. It can still move: a ticket being stamped, boxes
+being ticked one by one, as long as it rests on its finished frame.
 
 ## Build rules
 
-- **Layout follows the direction's page form**, not a template. If the direction is "a
-  menu on a chalkboard", the page can be a single column with ruled lines. Avoid the
-  default: a centered hero over three identical cards with icons. Avoid the second
-  default too: every section split into a small label on the left and content on the
-  right. Use that split once at most.
-- **The action appears twice** (hero and the end), so the form must work in a narrow
-  column as well as full width: switch it to a row by its own width (`@container` on the
-  wrapper, `@xl:flex-row` on the form), not the viewport's, and give its inputs ids from
-  `useId()` so the two copies don't share ids.
-- **Spacing from one scale** (4, 8, 12, 16, 24, 32, 48, 64, 96, 128). Generous space
-  between sections; tight within them.
+- **Layout follows the pattern and the page form**, never a template. Avoid the two
+  defaults: a centred hero over three identical cards with icons, and every section split
+  into a small label on the left and content on the right.
+- **Shared parts go in components** (`src/components/`): the header, the footer, the
+  form, the invariant, the product object. A change to the header changes every page.
+- **The header carries real navigation** once there is more than one page: the pages
+  from the plan, the current page marked, and the one action. On a phone it must fit at
+  375px without a hamburger if there are four links or fewer.
+- **The action appears more than once**, so the form must work in a narrow column and
+  full width: lay it out by its own width (`@container` on the wrapper, `@xl:flex-row`
+  on the form), give inputs ids from `useId()`, and keep the button label on one line
+  (`whitespace-nowrap`).
+- **Spacing from one scale** (4, 8, 12, 16, 24, 32, 48, 64, 96, 128). Generous between
+  sections; tight within them.
 - **Type from the stage 3 scale only.** At most three sizes per section.
 - **The brand color only on the main action** and the invariant.
-- **Motion with a reason:** one entrance per section at most, 200–400ms, ease-out.
-  With `prefers-reduced-motion`, everything lands on its final frame, never hidden.
+- **Motion with a reason:** at most one entrance per section, 200–400ms, ease-out, and
+  only on engines you declared. Declare keyframes with `animation-fill-mode: both` and
+  let one global `prefers-reduced-motion: reduce` rule set durations to near zero, so
+  everything lands on its final frame. A reveal that hides content under reduced motion
+  is a bug.
 - **Mobile first:** design at 375px wide, then widen. No horizontal scroll ever.
-- **Accessible:** real headings in order, `alt` text, visible focus states, 44px tap
-  targets, and every animated demo has an `sr-only` sentence saying what it shows.
+- **Accessible:** one `h1` per page, headings in order, `alt` text that says what is in
+  the picture, visible focus states, 44px tap targets, and every animated or decorative
+  demo has an `sr-only` sentence saying what it shows.
 - **Fast:** hero image with `priority`, everything else lazy; no animation library
-  unless it earns its weight.
+  unless a pattern you chose needs it.
 
 ## Check
 
-Run the project's check command (CLAUDE.md lists it), then open every changed page at
-375px and 1280px, light and dark, and look at each section. Then go to stage 6.
+Run the project's check command (CLAUDE.md lists it), then open every page at 375px and
+1280px, light and dark. Then go to stage 6.

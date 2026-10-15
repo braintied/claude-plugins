@@ -5,7 +5,12 @@ tokens the code reads.
 
 ## Name (if not settled)
 
-Generate 20–30 candidates that fit the voice. Cut to five. For each finalist: check the
+Generate 20–30 candidates that fit the voice, across strategies: the trade's own word
+(jargon), a clipped word, a bent word, a coined one, a plain one. Put them in
+`docs/brand/names.json` with the trade's insider words and the outsider words a stranger
+would use, and rank them: `node "<name script>" docs/brand/names.json`. The score
+penalises the obvious ("Fresh Catch" for a fish service scores 0.08; "Nustem", Konkani
+for fish, scores 0.78). Treat the ranking as a strong opinion, not the answer. Cut to five. For each finalist: check the
 .com and one local TLD (Cloudflare Registrar search or `whois`), the main social handle,
 and a quick trademark search (WIPO Global Brand Database, plus the national register
 where they'll trade). Present the five with what's free. The person picks.

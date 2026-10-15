@@ -24,12 +24,24 @@ yes before money is spent or before code is written.
 | 2 | Direction | brief | `docs/brand/direction.md` | [02-direction](references/02-direction.md) |
 | 3 | Identity | direction | tokens in `globals.css`, `docs/brand/identity.md` | [03-identity](references/03-identity.md) |
 | 4 | Imagery | direction, identity | `public/images/*`, `docs/brand/images.md` | [04-imagery](references/04-imagery.md) |
-| 5 | Composition | all of the above | the pages | [05-composition](references/05-composition.md) |
+| 5 | Composition | all of the above | `docs/brand/site-plan.md`, every page and the site essentials | [05-composition](references/05-composition.md), [05b-site-essentials](references/05b-site-essentials.md), [product-demo](references/product-demo.md) |
 | 6 | Critique | the running site | fixes + `docs/brand/critique.md` | [06-critique](references/06-critique.md) |
 
 The stage 4 image script lives at `${CLAUDE_SKILL_DIR}/scripts/generate-image.mjs`.
 Use that exact path; the reference files call it `<image script>`. The palette check
 is `${CLAUDE_SKILL_DIR}/scripts/contrast.mjs` (`<contrast script>`).
+
+Helper scripts, all in `${CLAUDE_SKILL_DIR}/scripts/`, run from the project folder:
+
+| Script | Stage | What it does | Needs |
+|---|---|---|---|
+| `name-score.mjs` (`<name script>`) | 3 | Ranks name candidates; obvious names sink | `pnpm add -D @braintied/naming` |
+| `contrast.mjs` | 3 | Contrast of every token pair, light and dark | nothing |
+| `audit-prompt.mjs` (`<audit script>`) | 4 | Checks image prompts before money is spent | `pnpm add -D @braintied/prompt-craft` |
+| `generate-image.mjs` | 4 | One image, with its cost | `OPENAI_API_KEY` in `.env.local` |
+| `patterns.mjs` (`<patterns script>`) | 5 | The section-pattern catalog: what a section can be | `pnpm add -D @braintied/site-engine` |
+
+Each script says the install command if its package is missing.
 
 After stage 2 is approved and `docs/brand/direction.md` is written, log the Academy
 milestone (optional and quiet; show its one line of output, if any):

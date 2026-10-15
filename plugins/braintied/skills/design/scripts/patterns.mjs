@@ -1,0 +1,49 @@
+#!/usr/bin/env node
+// The section-pattern catalog from @braintied/site-engine: what a section can
+// be, how to build it, what it must not turn into.
+//
+//   node patterns.mjs                      every pattern, one line each
+//   node patterns.mjs --role thesis        full build notes for one role
+//   node patterns.mjs --id specimen-ledger full build notes for one pattern
+//   node patterns.mjs --engines css,scroll which patterns this site can build
+//
+// Engines: css (always), canvas2d, scroll (a scroll library), gsap, webgl.
+// Say only the engines the project really has; a pattern that needs a missing
+// engine is listed as blocked, and a still pattern is offered instead.
+import { parseArgs } from "node:util";
+import { load } from "./_load.mjs";
+
+const { values } = parseArgs({
+  options: { role: { type: "string" }, id: { type: "string" }, engines: { type: "string", default: "css" } },
+});
+const se = await load("@braintied/site-engine");
+const surface = { engines: values.engines.split(",").map((e) => e.trim()), respectsReducedMotion: true };
+const blocked = new Map(se.auditSurface(se.SECTION_PATTERNS, surface).map((b) => [b.patternId, b.missingEngines]));
+
+const full = (p) =>
+  [
+    `## ${p.id}  [${p.role}]${blocked.has(p.id) ? `  BLOCKED: needs ${blocked.get(p.id).join(", ")}` : ""}`,
+    `Job: ${p.job}`,
+    `Build: ${p.prompt}`,
+    `Constraints:\n${p.constraints.map((c) => `  - ${c}`).join("\n")}`,
+    `A reviewer checks:\n${p.criticChecks.map((c) => `  - ${c}`).join("\n")}`,
+    `Not this: ${p.notThis}`,
+    "",
+  ].join("\n");
+
+const chosen = se.SECTION_PATTERNS.filter((p) => (!values.role || p.role === values.role) && (!values.id || p.id === values.id));
+if (!chosen.length) {
+  console.error(`No pattern matches. Roles: ${se.SECTION_ROLES.join(", ")}`);
+  process.exit(1);
+}
+if (values.role || values.id) {
+  console.log(chosen.map(full).join("\n"));
+} else {
+  for (const role of se.SECTION_ROLES) {
+    const inRole = chosen.filter((p) => p.role === role);
+    if (!inRole.length) continue;
+    console.log(`${role}`);
+    for (const p of inRole) console.log(`  ${blocked.has(p.id) ? "✗" : "✓"} ${p.id.padEnd(26)} ${p.job}`);
+  }
+  console.log(`\nEngines declared: ${surface.engines.join(", ")}. ✗ = needs an engine this site doesn't have.`);
+}

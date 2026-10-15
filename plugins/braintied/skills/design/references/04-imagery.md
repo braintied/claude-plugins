@@ -46,6 +46,12 @@ Write it like a brief to a photographer, in this order:
   arranges things like a product shot. Say how they were put down instead: "tipped in
   loosely so they overlap", "left where he dropped them".
 
+## Audit before you spend
+
+`node "<audit script>" docs/brand/prompts/*.txt` runs the anti-slop audit and flags
+arranged-object phrasing and a missing imperfection line. Fix what it flags first; it
+costs nothing.
+
 ## Generate
 
 Run it from the project folder; `<image script>` is the full path given in the design

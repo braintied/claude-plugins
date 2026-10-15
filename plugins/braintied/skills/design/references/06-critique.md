@@ -41,6 +41,14 @@ For each section, answer with the specific element named:
 7. **Mobile:** anything cramped, overflowing, or too small to tap?
 8. **Accessibility:** contrast, focus states, alt text, reduced motion.
 
+9. **Every page, not just home.** Each page in `site-plan.md` against its section jobs:
+   does each section do its job, and does it look like its pattern's recipe rather than
+   its "not this"? Check the share image (`/opengraph-image`), the icon, the 404 and the
+   privacy page too.
+10. **Motion:** with `prefers-reduced-motion: reduce` emulated, every demo sits on its
+    finished frame, nothing loops, nothing is hidden. Read the `sr-only` sentences
+    aloud: do they say what the product does?
+
 ## Fix and repeat
 
 Fix the three worst problems, re-screenshot, and show before/after side by side. Repeat
