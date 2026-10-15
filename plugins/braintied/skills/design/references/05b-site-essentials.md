@@ -35,9 +35,10 @@ no stock photo, no text in a generated picture. 1200×630.
 
 - Compose it like the site's first screen: the wordmark, the one sentence, the
   invariant. The page form applies here too (a ticket, a menu card, a job card).
-- `ImageResponse` can't read your `next/font` fonts. Put the display face's `.ttf` in
-  `src/app/fonts/` once (from the family's Google Fonts page, "Download family") and read
-  it with `readFile(join(process.cwd(), "src/app/fonts/<file>.ttf"))`.
+- `ImageResponse` can't read your `next/font` fonts. Install the face from Fontsource
+  (`pnpm add -D @fontsource/<family>`, e.g. `@fontsource/rozha-one`) and read its
+  `.woff` with `readFile(join(process.cwd(), "node_modules/@fontsource/<family>/files/<family>-latin-400-normal.woff"))`.
+  `ImageResponse` reads `.woff` and `.ttf`, not `.woff2`.
 - Colours: `ImageResponse` can't read CSS variables, so import them from one small
   `src/lib/brand.ts` that mirrors the light tokens, with a comment pointing at
   `globals.css`. That file and `globals.css` are the only two places a hex appears.

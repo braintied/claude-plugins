@@ -18,6 +18,9 @@ const { values } = parseArgs({
 });
 const se = await load("@braintied/site-engine");
 const surface = { engines: values.engines.split(",").map((e) => e.trim()), respectsReducedMotion: true };
+// These only work with real records: attributed quotes, credentials, stated terms.
+// A product that isn't live yet has none.
+const NEEDS_RECORDS = new Set(["attributed-review-wall", "credential-strip", "risk-reversal-band"]);
 const blocked = new Map(se.auditSurface(se.SECTION_PATTERNS, surface).map((b) => [b.patternId, b.missingEngines]));
 
 const full = (p) =>
@@ -43,7 +46,11 @@ if (values.role || values.id) {
     const inRole = chosen.filter((p) => p.role === role);
     if (!inRole.length) continue;
     console.log(`${role}`);
-    for (const p of inRole) console.log(`  ${blocked.has(p.id) ? "✗" : "✓"} ${p.id.padEnd(26)} ${p.job}`);
+    for (const p of inRole) {
+      const mark = blocked.has(p.id) ? "✗" : NEEDS_RECORDS.has(p.id) ? "r" : "✓";
+      console.log(`  ${mark} ${p.id.padEnd(26)} ${p.job}`);
+    }
+    if (inRole.every((p) => blocked.has(p.id))) console.log(`  → nothing usable on these engines: compose a still ${role} and write its recipe in the plan.`);
   }
-  console.log(`\nEngines declared: ${surface.engines.join(", ")}. ✗ = needs an engine this site doesn't have.`);
+  console.log(`\nEngines declared: ${surface.engines.join(", ")}. ✗ = needs an engine this site doesn't have. r = needs real records (quotes, credentials, terms).`);
 }

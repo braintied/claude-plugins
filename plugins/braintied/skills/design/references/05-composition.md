@@ -61,7 +61,16 @@ set as a menu; in a station board, as a timetable).
 Rules for the plan:
 
 - No two sections on a page use the same pattern, and no single layout repeats on more
-  than two sections of the site.
+  than two sections of the site. Page openers are exempt: inner pages open with the
+  page form's own head (the card's header, the board's first strip), not the home
+  page's entry pattern.
+- **A role with no usable pattern** (the listing shows only blocked ones, as `close`
+  does on `css`): compose a still one and write its recipe in the plan. A still close is
+  one statement, the action, and nothing else in the band.
+- **The page form's frame counts as the bleed edge.** A pattern that asks for full bleed
+  bleeds to the card or board edge when the page form is a framed object.
+- **Answer patterns stack.** Put the question above its answer, never in a column to its
+  left; that is the label-left default again.
 - Cut any section whose job repeats another's. Shorter wins.
 - Evidence patterns (`attributed-review-wall`, `credential-strip`) need real records. A
   product with none uses the founder's "why us" or a `specimen-ledger` of the method
