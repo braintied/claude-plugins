@@ -22,6 +22,11 @@ answer back; an assumption the person doesn't recognise gets cut, not kept.
    what exactly they love (the type? the photos? the pace?).
 7. The one action a visitor should take (join a waitlist, book, buy, download).
 
+**Question 6 can't be skipped.** If the person has no references, offer six (real sites,
+shops, printed things, places) that fit the idea, and let them pick two or three and say
+what they like in each. A direction with no real references has nothing to be judged
+against later, and drifts to the generic page.
+
 ## Write `docs/brand/brief.md`
 
 ```markdown

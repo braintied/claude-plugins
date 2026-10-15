@@ -18,6 +18,24 @@ fails quietly in the background and the old server keeps serving pages that no l
 match the build. After each fix, confirm the screenshot shows the changed text before
 judging it.
 
+## First: designed or generated?
+
+Before any mechanics, put the first screen of each page beside the references from the
+brief (screenshots or photos of them; take them now if you don't have them) and answer
+in writing, in `critique.md`:
+
+1. **Would a stranger believe a designer made this?** Yes or no, in one sentence each
+   way. "Clean" and "fine" are no.
+2. **The three things that most make it look generated**, named by element: "the
+   three grey tier cards", "every section starts with a heading on the left",
+   "nothing on the first screen but type". Each must be specific enough to fix.
+3. **What the reference does that this page doesn't**: the scale contrast, the
+   photograph's light, the density, the one bold move.
+
+Fix those three before anything in the list below, then ask question 1 again. Only a
+yes moves on to mechanics. If the answer is still no after two rounds, the direction or
+the image set is the problem: go back to stage 2 or 4, not to another round of spacing.
+
 ## Score against the files, not taste in the abstract
 
 For each section, answer with the specific element named:

@@ -123,6 +123,18 @@ the ticket, the signed check sheet. Label it in the world's own words ("Specimen
 the number will be measured instead. It can still move: a ticket being stamped, boxes
 being ticked one by one, as long as it rests on its finished frame.
 
+## Every page has something to look at
+
+- **The first screen of every page has one dominant visual:** a photograph from stage 4,
+  the product object or demo, or a drawn object from the world. Never a grey box, a
+  dashed frame or an empty "image" area.
+- **No more than two text-only sections in a row.** A text-only section is one with no
+  photograph, object, demo, drawing, table or oversized type.
+- **No grey cards.** A block of `bg-surface` boxes with a heading and two lines each is
+  the template look, whatever the label says ("tiers", "steps", "features"). If the page
+  form is an object (a carrier, a ticket, a card), draw the object; don't box text and
+  call it the object.
+
 ## Build rules
 
 - **Layout follows the pattern and the page form**, never a template. Avoid the two

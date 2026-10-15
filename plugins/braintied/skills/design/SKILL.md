@@ -50,6 +50,15 @@ milestone (optional and quiet; show its one line of output, if any):
 Read the stage's reference file before starting that stage. Don't skip ahead: a page
 composed before the direction exists will be the generic page.
 
+**Gates that don't bend, even when the person approves everything up front:**
+
+- Stage 5 doesn't start until every image in `images.md` exists in `public/images/`.
+  Never compose around a placeholder ("image not generated yet", a grey box, a dashed
+  frame). If the person won't spend on images, go back to stage 4 and re-plan the set
+  as drawn objects, type and product demos, then compose to that plan.
+- Stage 6 opens with the "designed or generated?" verdict (see 06) before any mechanics.
+  A page that passes every mechanical check can still look made in five minutes.
+
 ## Starting points
 
 - **Nothing yet:** start at 1.
