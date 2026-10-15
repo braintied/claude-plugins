@@ -142,22 +142,11 @@ Rules for the plan:
 
 Show the plan to the person before building. This is where "make it better" is cheap.
 
-## 2. Write the words with a tournament
+## 2. Write the words: [05c-copy](05c-copy.md)
 
-For the hero headline, the home page's first sentence and each page's first line,
-don't write one version:
-
-1. Write five versions in the direction's voice, each taking a different angle.
-2. Judge each against three readers: **the sceptic** (which claim can't they believe?),
-   **the first user from the brief, tired, on their phone** (which one would they stop
-   scrolling for?), and **a competitor** (which one could they also say? that one loses).
-3. Keep the winner and steal one phrase from the runner-up. Note the losers in
-   `site-plan.md` so nobody rewrites the same weak line later.
-
-Before writing, read ten headlines on [H1 Gallery](https://h1gallery.com): short,
-concrete, one turn. Write in the direction's **Copy** block: its lexicon (the world's
-own words), its headline rule, and none of its banned words. A headline that would make
-sense on a competitor's site loses, however well it reads.
+Before any page is built, every section in the plan gets its job, hook, line and proof
+in `docs/brand/copy.md`, the first screen gets a hero shape, and the headlines go
+through the eight-version tournament. The pages are then set from that file.
 
 ## 3. Show the product, don't describe it
 

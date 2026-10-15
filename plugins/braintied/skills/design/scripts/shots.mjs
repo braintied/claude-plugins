@@ -5,6 +5,7 @@
 //   node shots.mjs --site http://localhost:3000 --pages /,/how-it-works [--tag pass2]
 //   node shots.mjs ... --reduced          also shoot with reduced motion
 //   node shots.mjs ... --refresh-refs     re-shoot the references
+//   node shots.mjs ... --video            also record a scroll of each page (webm, 1440 and 390, light)
 //
 // Reads docs/brand/references.json (written in stage 1 and 2):
 //   [{ "name": "…", "url": "https://…" (or "image": "docs/brand/refs/x.jpg"), "governs": "the one thing it decides" }]
@@ -24,6 +25,7 @@ const { values } = parseArgs({
     tag: { type: "string", default: "latest" },
     reduced: { type: "boolean", default: false },
     "refresh-refs": { type: "boolean", default: false },
+    video: { type: "boolean", default: false },
   },
 });
 
@@ -170,6 +172,37 @@ for (const path of values.pages.split(",")) {
   }
 }
 
+// A recorded scroll per page: motion is half the design and stills can't show it. The
+// wheel (not scrollTo) drives it, so smooth scroll, pins and scrubs run as they do for
+// a visitor.
+const videos = [];
+if (values.video) {
+  for (const path of values.pages.split(",")) {
+    const name = path === "/" ? "home" : slug(path);
+    for (const [w, h] of WIDTHS) {
+      const context = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: "light", recordVideo: { dir: `${root}/${name}/_video`, size: { width: w > 500 ? 1280 : w, height: w > 500 ? 800 : h } } });
+      const page = await context.newPage();
+      await page.goto(`${values.site}${path}`, { waitUntil: "networkidle" });
+      await page.waitForTimeout(1500);
+      const total = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+      await page.mouse.move(w / 2, h / 2);
+      for (let y = 0; y < total + 400; y += 90) {
+        await page.mouse.wheel(0, 90);
+        await page.waitForTimeout(45);
+      }
+      await page.waitForTimeout(1200);
+      const video = page.video();
+      await context.close();
+      if (video) {
+        const file = `${root}/${name}/scroll-${w}.webm`;
+        await video.saveAs(file);
+        videos.push({ path, name, w, file });
+        console.log(`  recorded ${path} at ${w} -> ${file}`);
+      }
+    }
+  }
+}
+
 const refShots = [];
 mkdirSync("docs/brand/shots/refs", { recursive: true });
 for (const ref of refs) {
@@ -238,7 +271,7 @@ ${values.pages.split(",").map((path) => {
 ${cell(`${name}/light-${w}-fold.png`, "this site, light")}
 ${cell(`${name}/dark-${w}-fold.png`, "this site, dark")}
 ${refShots.filter((r) => r.w === w).map((r) => cell(rel(r.file), `${r.name}: ${r.governs ?? ""}`)).join("\n")}
-</div>`).join("\n");
+</div>`).join("\n") + videos.filter((v) => v.path === path).map((v) => `<h2>${path} scrolled at ${v.w}</h2><video controls muted playsinline preload="metadata" src="${rel(v.file)}" style="max-width:${v.w > 500 ? 960 : 320}px;width:100%;border:1px solid #8884"></video>`).join("\n");
 }).join("\n")}
 <h2>Signals</h2>
 <table><tr><th>page</th><th>scheme</th><th>width</th><th>visual share</th><th>type scale</th><th>text-only run</th><th>full bleed</th><th>animations</th><th>overflow</th></tr>

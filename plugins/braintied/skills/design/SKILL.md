@@ -36,7 +36,7 @@ side-by-side critique still happen.
 | 2 | Direction and art direction | brief, references | `docs/brand/direction.md`, `references.json` | [02-direction](references/02-direction.md), [reference-sites](references/reference-sites.md) |
 | 3 | Identity | direction | tokens in `globals.css`, `docs/brand/identity.md` | [03-identity](references/03-identity.md) |
 | 4 | Imagery | direction, identity | `docs/brand/prompts.json`, `public/images/*`, `docs/brand/images.md` | [04-imagery](references/04-imagery.md) |
-| 5 | Composition | all of the above | `docs/brand/site-plan.md`, every page and the site essentials | [05-composition](references/05-composition.md), [motion-recipes](references/motion-recipes.md), [05b-site-essentials](references/05b-site-essentials.md), [product-demo](references/product-demo.md) |
+| 5 | Composition and copy | all of the above | `docs/brand/site-plan.md`, `docs/brand/copy.md`, every page and the site essentials | [05-composition](references/05-composition.md), [05c-copy](references/05c-copy.md), [motion-recipes](references/motion-recipes.md), [05b-site-essentials](references/05b-site-essentials.md), [product-demo](references/product-demo.md) |
 | 6 | Critique | the running site, the references | fixes + `docs/brand/critique.md`, `docs/brand/shots/` | [06-critique](references/06-critique.md) |
 
 The stage 4 image script lives at `${CLAUDE_SKILL_DIR}/scripts/generate-image.mjs`.
@@ -51,6 +51,7 @@ Helper scripts, all in `${CLAUDE_SKILL_DIR}/scripts/`, run from the project fold
 | `contrast.mjs` | 3 | Contrast of every token pair, light and dark | nothing |
 | `audit-prompt.mjs` (`<audit script>`) | 4 | Checks image prompts before money is spent | `pnpm add -D @braintied/prompt-craft@3.1.0` (exact: `@latest` can resolve older under pnpm's release-age hold) |
 | `image-set.mjs` (`<image-set script>`) | 4 | Composes every prompt from `prompts.json`, prices the set, makes it in parallel, keeps every take | `OPENAI_API_KEY` in `.env.local` |
+| `copy-audit.mjs` (`<copy-audit script>`) | 5, 6 | The words on each running page: prose audit, banned words, every number | `pnpm add -D @braintied/prose playwright` |
 | `shots.mjs` (`<shots script>`) | 2, 6 | Screenshots every page beside the references, with the signals | `pnpm add -D playwright` |
 | `generate-image.mjs` | 4 | One image, with its cost | `OPENAI_API_KEY` in `.env.local` |
 | `patterns.mjs` (`<patterns script>`) | 5 | The section-pattern catalog: what a section can be | `pnpm add -D @braintied/site-engine` |
@@ -60,6 +61,9 @@ Each script says the install command if its package is missing.
 After stage 2 is approved and `docs/brand/direction.md` is written, log the Academy
 milestone (optional and quiet; show its one line of output, if any):
 `node "${CLAUDE_SKILL_DIR}/../learn/scripts/academy.mjs" signal design_direction_written`
+
+What each stage draws on (our own sites, the research corpus, the packages, the runs
+that tested it) is in [sources](references/sources.md).
 
 Read the stage's reference file before starting that stage. Don't skip ahead: a page
 composed before the direction exists will be the generic page.
@@ -72,6 +76,8 @@ composed before the direction exists will be the generic page.
   as drawn objects, type and product demos, then compose to that plan.
 - Stage 4 makes the anchor frame (and one more) before the rest of the set, and the
   person sees them before the set is paid for.
+- Stage 5 writes `copy.md` (every section's job, hook, line and proof, the headline
+  tournament) before any page is built. Words written inside JSX are the generated page's words.
 - Stage 5 writes each page's first screen and the motion plan (the signature mechanism,
   the page-level motion) into `site-plan.md` before code. A site with no motion plan is
   the static template again.
