@@ -91,7 +91,9 @@ time. A wrong anchor fixed now costs one frame; found after the set, it costs th
 | `1024x1024` square | about $0.05 | about $0.09 |
 | `2560x1440` wide hero (bigger frames scale by pixels) | about $0.10 | about $0.17 |
 
-A photographic site of 12 frames at `high` is about $0.50–1.20. The script prints the
+A photographic site of 12 frames at `high` is about $0.50–1.20. When the person caps the
+spend, plan the set to about two thirds of the cap and hold the rest for retakes: one
+in three frames usually needs one. The script prints the
 real cost of every frame and keeps a running total in `docs/brand/images.json`.
 
 **Phone crops.** A 3:2 frame shown full-screen on a phone shows about a third of its

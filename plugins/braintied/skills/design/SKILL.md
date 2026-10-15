@@ -49,7 +49,7 @@ Helper scripts, all in `${CLAUDE_SKILL_DIR}/scripts/`, run from the project fold
 |---|---|---|---|
 | `name-score.mjs` (`<name script>`) | 3 | Ranks name candidates; obvious names sink | `pnpm add -D @braintied/naming` |
 | `contrast.mjs` | 3 | Contrast of every token pair, light and dark | nothing |
-| `audit-prompt.mjs` (`<audit script>`) | 4 | Checks image prompts before money is spent | `pnpm add -D @braintied/prompt-craft` (3.1.0+) |
+| `audit-prompt.mjs` (`<audit script>`) | 4 | Checks image prompts before money is spent | `pnpm add -D @braintied/prompt-craft@3.1.0` (exact: `@latest` can resolve older under pnpm's release-age hold) |
 | `image-set.mjs` (`<image-set script>`) | 4 | Composes every prompt from `prompts.json`, prices the set, makes it in parallel, keeps every take | `OPENAI_API_KEY` in `.env.local` |
 | `shots.mjs` (`<shots script>`) | 2, 6 | Screenshots every page beside the references, with the signals | `pnpm add -D playwright` |
 | `generate-image.mjs` | 4 | One image, with its cost | `OPENAI_API_KEY` in `.env.local` |

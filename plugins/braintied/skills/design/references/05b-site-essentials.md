@@ -46,6 +46,9 @@ no stock photo, no text in a generated picture. 1200×630.
   `ImageResponse` reads `.woff` and `.ttf`, not `.woff2`, and can't use a variable
   font's width axis: for a condensed face, use the family's Narrow or Condensed cut
   (`@fontsource/archivo-narrow` for Archivo at its condensed width).
+- `ImageResponse` (Satori) supports a subset of CSS: no `border-style: double`, no
+  `background-clip: text`, no CSS variables, flexbox only. Draw a double rule as two
+  1px elements. Its errors happen at request time, not in `pnpm build`.
 - Colours: `ImageResponse` can't read CSS variables, so import them from one small
   `src/lib/brand.ts` that mirrors the light tokens, with a comment pointing at
   `globals.css`. That file and `globals.css` are the only two places a hex appears.
@@ -88,6 +91,9 @@ line.
 
 - `pnpm build` lists every page, `/opengraph-image`, `/icon`, `/sitemap.xml` and
   `/robots.txt`.
+- After `pnpm start`, request every image route and expect 200 and an image type:
+  `for r in /opengraph-image /icon /apple-icon; do curl -s -o /dev/null -w "$r %{http_code} %{content_type}\n" localhost:3000$r; done`.
+  A route that fails here passed `pnpm build`.
 - Open `/opengraph-image` and `/icon` and look at them.
 - Visit a made-up URL and see the 404.
 - Every page has a different `<title>`.

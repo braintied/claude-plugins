@@ -38,8 +38,13 @@ and drifts to the generic page.
 Write them to `docs/brand/references.json` (stage 2 adds what each one governs):
 
 ```json
-[{ "name": "…", "url": "https://…", "loves": "what the person said they love in it" }]
+[{ "name": "…", "url": "https://…", "loves": "what the person said they love in it" },
+ { "name": "A Goan shop signboard", "image": "docs/brand/refs/signboard.jpg", "loves": "letters painted big" }]
 ```
+
+A reference that isn't a website (a printed menu, a shop sign, a place) goes in as an
+`image`: a photo the person has, or one you find and save to `docs/brand/refs/`. Stage 6
+puts every reference beside the page, so each needs a picture.
 
 ## Write `docs/brand/brief.md`
 

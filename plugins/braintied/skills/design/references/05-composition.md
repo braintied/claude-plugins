@@ -42,6 +42,9 @@ Write each page's first screen before its sections, as one composition:
 - **The budget:** the wordmark, one headline at the display step, one sentence, the
   action, and the visual. Nothing else: no feature list, no stat strip, no badges.
 - **Scale contrast:** on desktop the headline is at least five times the body size.
+  The display step is for lines of five words or fewer (the home line, the 404). An
+  inner page's longer first line uses the headline step, with its line breaks written
+  by hand, never left to the viewport.
 - The headline can sit *on* the picture (with the scrim token for contrast) or be the
   picture (typographic world). Don't box it.
 
@@ -82,8 +85,8 @@ For each page, list its sections in order. Each line has three parts:
   with `--id <pattern>`. Each pattern gives a build recipe with real numbers, the
   constraints, what a reviewer checks, and what it must *not* become. Declare the
   engines the direction's **World layer** names and install them first: photographic,
-  film and object worlds use `--engines css,gsap,scroll` (`pnpm add gsap @gsap/react
-  lenis`); a field adds `canvas2d`; a purely typographic page can stay `css,gsap`. A
+  film and object worlds use `--engines css,gsap,scroll` (install line in
+  [motion-recipes](motion-recipes.md)); a field adds `canvas2d`; a purely typographic page can stay `css,gsap`. A
   pattern that needs an engine you didn't declare shows as blocked. Don't declare an
   engine to unlock a pattern you won't build properly: a scroll pattern with its motion
   half-done reads as broken.
@@ -172,6 +175,9 @@ being ticked one by one, as long as it rests on its finished frame.
   width is an illustration of the text; at full width it is the world.
 - **The graphic kit is used**, not just defined: the motif from stage 3 appears on every
   page, and the object (if there is one) is drawn at a size you can read its parts.
+- **Two-tone pictures in both themes:** a duotone that maps from ground to ink flips
+  meaning in dark mode. Layer instead: the photograph in greyscale, one layer of the ink
+  token in `multiply` and one of the ground token in `screen`; it holds in both themes.
 - **Text on pictures** sits on a scrim (add a `--scrim` token: the ground colour at
   40–70%, as a gradient from the text's side) so it reads in both themes. The contrast
   script can't see a photograph; judge it in the stage 6 screenshots, at phone width.
@@ -180,7 +186,8 @@ being ticked one by one, as long as it rests on its finished frame.
   the product object or demo, or a drawn object from the world. Never a grey box, a
   dashed frame or an empty "image" area.
 - **No more than two text-only sections in a row.** A text-only section is one with no
-  photograph, object, demo, drawing, table or oversized type.
+  photograph, object, demo, drawing, table or oversized type. A band set at the display
+  step counts as oversized type, so as a picture; once per page.
 - **No grey cards.** A block of `bg-surface` boxes with a heading and two lines each is
   the template look, whatever the label says ("tiers", "steps", "features"). If the page
   form is an object (a carrier, a ticket, a card), draw the object; don't box text and
@@ -193,7 +200,8 @@ being ticked one by one, as long as it rests on its finished frame.
   into a small label on the left and content on the right.
 - **Shared parts go in components** (`src/components/`): the header, the footer, the
   form, the invariant, the product object. A change to the header changes every page.
-- **The header carries real navigation** once there is more than one page: the pages
+- **The header is not sticky** unless the plan says so (a pinned film or chapter
+  sequence then has to offset for it). **It carries real navigation** once there is more than one page: the pages
   from the plan, the current page marked, and the one action. On a phone it must fit at
   375px without a hamburger if there are four links or fewer.
 - **Marking the current page needs a Suspense boundary.** The starter turns on Cache

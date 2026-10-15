@@ -7,7 +7,7 @@
 //   node shots.mjs ... --refresh-refs     re-shoot the references
 //
 // Reads docs/brand/references.json (written in stage 1 and 2):
-//   [{ "name": "…", "url": "https://…", "governs": "the one thing this reference decides" }]
+//   [{ "name": "…", "url": "https://…" (or "image": "docs/brand/refs/x.jpg"), "governs": "the one thing it decides" }]
 // Writes docs/brand/shots/<tag>/<page>/<scheme>-<width>(-fold).png,
 // docs/brand/shots/refs/<name>-<width>.png, and docs/brand/shots/<tag>/compare.html:
 // every page's first screen beside the references at the same width, with the signals.
@@ -165,6 +165,13 @@ for (const path of values.pages.split(",")) {
 const refShots = [];
 mkdirSync("docs/brand/shots/refs", { recursive: true });
 for (const ref of refs) {
+  if (ref.image) {
+    // Not a website: a photo of a sign, a menu, a place. Shown at both widths as is.
+    if (existsSync(ref.image)) for (const [w] of WIDTHS) refShots.push({ ...ref, w, file: ref.image });
+    else console.log(`  reference ${ref.name}: ${ref.image} doesn't exist`);
+    continue;
+  }
+  if (!ref.url) continue;
   for (const [w, h] of WIDTHS) {
     const file = `docs/brand/shots/refs/${slug(ref.name)}-${w}.png`;
     if (!existsSync(file) || values["refresh-refs"]) {
@@ -200,7 +207,7 @@ for (const r of results) {
 }
 if (!refs.length) console.log("\nNo docs/brand/references.json, so nothing to compare against. Stage 1 asks for references.");
 
-const rel = (p) => p.replace(`${root}/`, "").replace("docs/brand/shots/", "../");
+const rel = (p) => (p.startsWith("docs/brand/shots/") ? p.replace("docs/brand/shots/", "../") : `../../../../${p}`);
 const cell = (src, label) => `<figure><img loading="lazy" src="${src}" alt="${label}"><figcaption>${label}</figcaption></figure>`;
 const html = `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Shots · ${values.tag}</title>
