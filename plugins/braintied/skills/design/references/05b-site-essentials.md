@@ -38,7 +38,9 @@ no stock photo, no text in a generated picture. 1200×630.
 - `ImageResponse` can't read your `next/font` fonts. Install the face from Fontsource
   (`pnpm add -D @fontsource/<family>`, e.g. `@fontsource/rozha-one`) and read its
   `.woff` with `readFile(join(process.cwd(), "node_modules/@fontsource/<family>/files/<family>-latin-400-normal.woff"))`.
-  `ImageResponse` reads `.woff` and `.ttf`, not `.woff2`.
+  `ImageResponse` reads `.woff` and `.ttf`, not `.woff2`, and can't use a variable
+  font's width axis: for a condensed face, use the family's Narrow or Condensed cut
+  (`@fontsource/archivo-narrow` for Archivo at its condensed width).
 - Colours: `ImageResponse` can't read CSS variables, so import them from one small
   `src/lib/brand.ts` that mirrors the light tokens, with a comment pointing at
   `globals.css`. That file and `globals.css` are the only two places a hex appears.

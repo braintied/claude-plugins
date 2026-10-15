@@ -73,9 +73,12 @@ set as a menu; in a station board, as a timetable).
 Rules for the plan:
 
 - No two sections on a page use the same pattern, and no single layout repeats on more
-  than two sections of the site. Page openers are exempt: inner pages open with the
-  page form's own head (the card's header, the board's first strip), not the home
-  page's entry pattern.
+  than two sections of the site. Page openers and closes are exempt: inner pages open
+  with the page form's own head (the card's header, the board's first strip) and end on
+  the same close, because the invariant puts the action on every page.
+- **Records, before launch:** a recipe that asks for facts "traceable to a real record"
+  (a fact rail, a ledger) can use method facts the founder decides (when it is booked,
+  where it is measured, who is paid). Numbers, customers and results cannot.
 - **A role with no usable pattern** (the listing shows only blocked ones, as `close`
   does on `css`): compose a still one and write its recipe in the plan. A still close is
   one statement, the action, and nothing else in the band.
@@ -111,8 +114,8 @@ don't write one version:
 ## 3. Show the product, don't describe it
 
 If there's a product, recreate a small piece of the real interface in code and let it
-play through the one moment that matters. The mechanics (a scripted state machine,
-played when seen, reduced-motion safe) are in [product-demo](product-demo.md).
+play through the one moment that matters. The mechanics (CSS steps played once by one
+observer, resting on the finished frame) are in [product-demo](product-demo.md).
 
 No product yet? Recreate the *thing the customer will hold*: the slip in the parcel,
 the ticket, the signed check sheet. Label it in the world's own words ("Specimen",

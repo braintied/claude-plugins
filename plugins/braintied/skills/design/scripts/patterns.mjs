@@ -41,6 +41,14 @@ if (!chosen.length) {
 }
 if (values.role || values.id) {
   console.log(chosen.map(full).join("\n"));
+  for (const role of new Set(chosen.map((p) => p.role))) {
+    const usable = se.SECTION_PATTERNS.filter((p) => p.role === role && !blocked.has(p.id));
+    if (chosen.some((p) => p.role === role && blocked.has(p.id))) {
+      console.log(usable.length
+        ? `Usable ${role} patterns on these engines: ${usable.map((p) => p.id).join(", ")}`
+        : `No ${role} pattern works on these engines. Compose a still one and write its recipe in the plan (05, plan rules).`);
+    }
+  }
 } else {
   for (const role of se.SECTION_ROLES) {
     const inRole = chosen.filter((p) => p.role === role);
