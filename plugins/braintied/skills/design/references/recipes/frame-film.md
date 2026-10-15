@@ -39,6 +39,10 @@ export function FrameFilm({ frames, title }: { frames: Frame[]; title: string })
           scrollTrigger: {
             trigger: el,
             pin: true,
+            // GSAP turns pin spacing off when the pinned element's parent is a flex
+            // container (a <main className="flex flex-col"> is), and the next section
+            // slides over the film. Say it explicitly.
+            pinSpacing: true,
             scrub: 0.5,
             start: "top top",
             end: `+=${frames.length * perFrame}%`,
@@ -79,9 +83,11 @@ export function FrameFilm({ frames, title }: { frames: Frame[]; title: string })
       </ol>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden bg-linear-to-t from-scrim to-transparent px-4 pt-24 pb-[max(1.5rem,env(safe-area-inset-bottom))] motion-safe:block md:px-16 md:pb-12">
         <p className="font-mono text-xs uppercase tracking-[0.3em]">{title}</p>
-        <div className="relative mt-3 h-[3.5em] text-lg leading-snug md:text-3xl">
+        {/* Every caption in one grid cell: the box is as tall as the tallest caption, so
+            one that wraps on a phone never runs into the title above it. */}
+        <div className="mt-3 grid items-end text-lg leading-snug md:text-3xl">
           {frames.map((f, i) => (
-            <p key={f.src} data-cap className={`absolute inset-0 max-w-[36ch] ${i > 0 ? "invisible opacity-0" : ""}`}>
+            <p key={f.src} data-cap className={`max-w-[36ch] [grid-area:1/1] ${i > 0 ? "invisible opacity-0" : ""}`}>
               {f.caption}
             </p>
           ))}

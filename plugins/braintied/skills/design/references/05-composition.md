@@ -60,7 +60,11 @@ From the direction's **Motion** block, write in `site-plan.md`:
 - **Entrances:** one per section at most, from the direction's durations.
 
 Two or three intentional motions per page is the target: the signature, the page-level
-motion, quiet entrances. More than that and nothing lands. None at all and the page
+motion, quiet entrances. On the home page add [depth](recipes/depth.md) on the first
+screen and, if the direction has one, the [scroll-instrument](recipes/scroll-instrument.md).
+Inner pages get their own: a pinned film of the process on the how-it-works page, the
+object standing beside the answers on the questions page. A home page that moves and
+inner pages that don't read as a template with one nice page. More than that and nothing lands. None at all and the page
 reads as unfinished next to the references.
 
 The engines and tested code for each are in [motion-recipes](motion-recipes.md).

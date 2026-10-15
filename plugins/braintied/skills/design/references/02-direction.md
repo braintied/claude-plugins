@@ -75,6 +75,14 @@ Then the test: delete the sentence's product name and give it to a competitor. I
 still works for them, it isn't a signature. One mechanism, not three; everything else
 stays quiet so it lands.
 
+Two things make a signature land harder, and both are cheap:
+
+- **An instrument.** If the product has a number that changes on the way to its promise
+  (a time, a height, a distance, a count), let the scroll be that journey and show the
+  number: a lunch site's clock runs from 11:30 to 1:00 down the page.
+- **The invariant at poster size, once.** The thing on every page, set enormous in one
+  place on the home page, where the instrument arrives.
+
 ## 6. Art direction: four systems
 
 Write one short block for each. Later stages build to these blocks; stage 6 checks them.

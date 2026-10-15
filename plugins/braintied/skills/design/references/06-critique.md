@@ -110,6 +110,14 @@ For each section, answer with the specific element named:
     sentences aloud: do they say what the product does? Scroll the home page fast on a
     phone-sized window: any stutter, any frame that loads late?
 
+## Then raise the ceiling
+
+A yes means it passes. Before calling it done, do one round aimed above the bar: open
+the reference you'd most like to be next to and ask what its studio would add. Usually
+one of: an instrument that makes the scroll a journey, the invariant at poster size once,
+a pinned film where a process is described in bands, depth on the first screen, motion
+on the inner pages that only the home page has. Pick one or two, build them, shoot again.
+
 ## Fix and repeat
 
 Fix the three worst problems, re-screenshot, and show before/after side by side. Repeat
