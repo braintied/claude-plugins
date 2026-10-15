@@ -25,11 +25,22 @@ If there's a product, recreate a small piece of the real interface in code (a ca
 message, a booking slot) and let it animate through the one moment that matters.
 Label illustrative data as illustrative.
 
+No product yet? Recreate the *thing the customer will hold*: the slip in the parcel,
+the ticket, the signed check sheet. Label it in the world's own words ("Specimen",
+"Example slip") and leave out any number from the brief's **Can't claim yet** line; a
+field can say how the number will be measured instead.
+
 ## Build rules
 
-- **Layout follows the direction**, not a template. If the direction is "a menu on a
-  chalkboard", the page can be a single column with ruled lines. Avoid the default: a
-  centered hero over three identical cards with icons.
+- **Layout follows the direction's page form**, not a template. If the direction is "a
+  menu on a chalkboard", the page can be a single column with ruled lines. Avoid the
+  default: a centered hero over three identical cards with icons. Avoid the second
+  default too: every section split into a small label on the left and content on the
+  right. Use that split once at most.
+- **The action appears twice** (hero and the end), so the form must work in a narrow
+  column as well as full width: switch it to a row by its own width (`@container` on the
+  wrapper, `@xl:flex-row` on the form), not the viewport's, and give its inputs ids from
+  `useId()` so the two copies don't share ids.
 - **Spacing from one scale** (4, 8, 12, 16, 24, 32, 48, 64, 96, 128). Generous space
   between sections; tight within them.
 - **Type from the stage 3 scale only.** At most three sizes per section.

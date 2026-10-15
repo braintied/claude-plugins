@@ -71,3 +71,15 @@ if (!b64) fail("OpenAI returned no image data.");
 mkdirSync(dirname(values.out), { recursive: true });
 writeFileSync(values.out, Buffer.from(b64, "base64"));
 console.log(`Saved ${values.out}`);
+
+// What this image cost. Rates are OpenAI's GPT Image token prices in USD per
+// million tokens; they reproduce the measured $0.053 for a 1024x1024 high image.
+// Update them when OpenAI's pricing page changes.
+const RATES = { textIn: 5, imageOut: 30 };
+const usage = body?.usage;
+if (usage) {
+  const textIn = usage.input_tokens_details?.text_tokens ?? usage.input_tokens ?? 0;
+  const imageOut = usage.output_tokens_details?.image_tokens ?? usage.output_tokens ?? 0;
+  const usd = (textIn * RATES.textIn + imageOut * RATES.imageOut) / 1_000_000;
+  console.log(`Tokens: ${textIn} prompt, ${imageOut} image. About $${usd.toFixed(3)}.`);
+}

@@ -11,7 +11,14 @@ List every image the site needs (hero, 2–4 section images, social share image 
   setting). This is what makes them look like one shoot.
 - **Varying:** the one thing that changes (subject, moment, distance).
 
-Write the plan to `docs/brand/images.md` and show the person before spending money.
+Write the plan to `docs/brand/images.md` with its cost (sizes below), and show the person
+before spending money. Two to four images are usually enough; when the direction is
+typographic (a timetable, a ticket), fewer images and more type is the stronger page.
+The social share image is optional on day one.
+
+Plan frames the model can draw. Hands *operating a mechanism* (squeezing a brake lever,
+turning a key, typing) fail most often: the hand ends up beside the part, not on it. Show
+the object, the result, or hands doing something broad (pressing flat, holding, cutting).
 
 ## Writing each prompt
 
@@ -35,6 +42,9 @@ Write it like a brief to a photographer, in this order:
 - Floating devices, holograms, abstract "network" shapes.
 - Text inside the image (add text in code instead).
 - Words like "stunning", "8k", "ultra-detailed", "hyperrealistic" in the prompt.
+- Identical objects in a neat row or grid ("six mackerel side by side"). The model
+  arranges things like a product shot. Say how they were put down instead: "tipped in
+  loosely so they overlap", "left where he dropped them".
 
 ## Generate
 
@@ -52,14 +62,26 @@ node "<image script>" \
 
 Save each prompt as a `.txt` under `docs/brand/prompts/` so it can be rerun and
 improved. Sizes: both edges multiples of 16, longest edge ≤ 3840, ratio ≤ 3:1.
-Common: `1536x1024` (landscape), `1024x1536` (portrait), `1024x1024`. About $0.05 each
-at the default quality.
+
+| Size | Default quality (`high`) |
+|---|---|
+| `1536x1024` landscape, `1024x1536` portrait | about $0.04 |
+| `1024x1024` square | about $0.05 (more tokens than landscape) |
+
+The script prints the tokens and the cost of every image; add them up in `images.md`.
+Each image takes about 20–25 seconds, so generate the whole set at once (one command per
+image, run in parallel) rather than one after another.
+
+Before a retake, copy the prompt to `<name>.v1.txt` so the one changed line shows in a
+diff.
 
 ## Judge every result
 
 Open each image and check it against the direction's refusals and the constants. Retake
 by changing **one** line of the prompt at a time, so you know what fixed it. Two bad
-retakes in a row means the plan is wrong, not the prompt: go back to the set plan.
+takes of the same frame (the first and one retake) with the same fault means the plan is
+wrong, not the prompt: replace the frame in the set plan with one the model can draw, and
+keep the rejected take in `docs/brand/rejected/` with one line on why.
 
 Use images with `next/image`, real `alt` text describing what's in them, and `priority`
 on the hero only.

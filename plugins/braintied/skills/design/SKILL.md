@@ -14,6 +14,10 @@ order, and writes each one down so every later step (and every later session) re
 Run them in order. Each stage reads the files the earlier ones wrote. Show the person
 the result of each stage and get a yes before the next; their taste is the point.
 
+**Short on time** (a workshop day): ask for one yes after stages 1–2 together and one
+after 3–4 together (show the image plan and cost before generating). Never skip the
+yes before money is spent or before code is written.
+
 | # | Stage | Reads | Writes | Reference |
 |---|---|---|---|---|
 | 1 | Brief | the person | `docs/brand/brief.md` | [01-brief](references/01-brief.md) |
@@ -24,7 +28,8 @@ the result of each stage and get a yes before the next; their taste is the point
 | 6 | Critique | the running site | fixes + `docs/brand/critique.md` | [06-critique](references/06-critique.md) |
 
 The stage 4 image script lives at `${CLAUDE_SKILL_DIR}/scripts/generate-image.mjs`.
-Use that exact path; the reference files call it `<image script>`.
+Use that exact path; the reference files call it `<image script>`. The palette check
+is `${CLAUDE_SKILL_DIR}/scripts/contrast.mjs` (`<contrast script>`).
 
 After stage 2 is approved and `docs/brand/direction.md` is written, log the Academy
 milestone (optional and quiet; show its one line of output, if any):
@@ -49,6 +54,8 @@ composed before the direction exists will be the generic page.
 - Colors and fonts only as tokens in `src/app/globals.css`.
 - Phone and desktop together, light and dark together. Never "I'll do mobile later".
 - Real words from the brief, never lorem ipsum, never invented numbers or testimonials.
+  Anything in the brief's **Can't claim yet** line stays off the page, or appears only
+  inside something labelled *Example* or *Specimen*.
 - Explain each choice in one plain sentence ("serif headings because the direction says
   'a letter from a friend', not 'a SaaS dashboard'"). The person is learning to see.
 

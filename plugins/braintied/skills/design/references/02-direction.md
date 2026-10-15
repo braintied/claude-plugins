@@ -37,12 +37,17 @@ Offer the person two or three distinct worlds, a paragraph each. Let them pick o
 # Direction
 
 **Rejected first idea:** <the obvious one>
+**Worlds offered:** <the two or three you offered, one line each, and which was chosen>
 **Feels like:** <the world>
 **Not like:** <the generic neighbor>
 **Refusals:** <3–7 checkable rules>
 **Analogs:**
 - <move> — from <reference>; avoid <what>
 **Invariant:** <the thing on every page>
+**Page form:** <the object the page is built like: a menu card is one ruled column, a
+timetable is a table, a job card is a numbered checklist>
+**Light / dark:** <what each theme is in this world: "light is the carbon copy in your
+hand, dark is the workshop at night">
 **Voice:** <description>. Right: "<sentence>" Wrong: "<sentence>"
 ```
 
@@ -51,3 +56,5 @@ Offer the person two or three distinct worlds, a paragraph each. Let them pick o
 - Swap in a competitor's name. If the direction still fits them, it's too vague.
 - Is any refusal impossible to check by looking at a page? Rewrite it until it isn't.
 - Does the chosen world differ from the rejected first idea in more than color?
+- Does the page form come from the world? "Label on the left, content on the right" for
+  every section is a template, not a form.

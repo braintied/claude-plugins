@@ -7,6 +7,11 @@ Goal: one page that every later decision can be checked against.
 Ask these one or two at a time, conversationally. Push for specifics; "everyone" and
 "easy to use" are not answers.
 
+If the person asks you to draft the answers ("just write something, I'll fix it"), write
+them as the founder's assumptions and put this line at the top of `brief.md`:
+`> Draft from assumptions. No customers, prices or results exist yet.` Then read each
+answer back; an assumption the person doesn't recognise gets cut, not kept.
+
 1. Who is the first person who would pay for or use this? Name a real kind of person
    ("a yoga teacher in Goa with 40 regulars"), not a market.
 2. What do they do today instead, and what's annoying about it?
@@ -30,6 +35,7 @@ Ask these one or two at a time, conversationally. Push for specifics; "everyone"
 **Feels:** <3 words> · **Never feels:** <3 words>
 **Loves:** <reference> — <the specific thing>; ...
 **The one action:** <action>
+**Can't claim yet:** <every number, customer, quote, partner or result that doesn't exist yet>
 ```
 
 Also fill "The idea" in CLAUDE.md from it.
